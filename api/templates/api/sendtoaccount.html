@@ -1,0 +1,111 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'api/sendtophone.css' %}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Send To Account</title>
+  </head>
+  <body>
+    <div class="sendtophone_payment_div">
+      <div class="">
+
+        <div class="">
+            <p><a href="#">Send to Mobile Money</a></p>
+          </div>
+          <div class="">
+            <p><a href="#">Send to Account</a></p>
+          </div>
+          <div class="">
+            <p><a href="#">Link Your Account</a></p>
+          </div>
+
+      </div>
+      <div>
+            <p><a href="#">Receiver Phone No.</a></p>
+            <form action="">
+                <div>
+                    <p>From Account</p>
+                </div>
+                <div>
+                    <input type="text" placeholder="Account No">
+                </div>
+                <div>
+                    <label for="phone">Phone</label>
+                </div>
+                <div>
+                    <input type="text">
+                </div>
+                <div>
+                    <button class="send_money_btn">Send</button>
+                </div>
+            </form>
+      </div>
+    </div>
+  </body>
+</html> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% comment %} {% load static %}
+    <link rel="stylesheet" href="{% static 'api/sendtophone.css' %}" /> {% endcomment %}
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Send To Phone</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <p><a href="/sendtophone" class="btn btn-primary btn-block">Send to Mobile Money</a></p>
+        </div>
+        <div class="col-md-4 mb-3">
+          <p><a href="/sendtoaccount" class="btn btn-secondary btn-block">Send to Account</a></p>
+        </div>
+        <div class="col-md-4 mb-3">
+          <p><a href="#" class="btn btn-info btn-block">Link Your Account</a></p>
+        </div>
+      </div>
+      <div class="card p-4">
+        <p class="h5">Send to Account</p>
+        <form action="">
+          <div class="form-group">
+            <label for="bank">Select Bank</label>
+            <select class="form-control" name="bank" id="bank">
+              <option value="equity">Equity</option>
+              <option value="absabank">Absa Bank</option>
+
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Account No.</label>
+            <input type="text" class="form-control" name="account" id="account" placeholder="Account No">
+          </div>
+          
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" class="form-control" name="amount" id="amount" placeholder="Amount">
+          </div>
+          <div class="form-group">
+            <label for="reason">Reason For Payment</label>
+            <input type="text" class="form-control" name="reason" id="reason" placeholder="Reason For Payment">
+          </div>
+          <button type="submit" class="btn btn-success btn-block send_money_btn">Send</button>
+        </form>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaKxtJ6gu0B9MAFmr/qL2R9pTj3sI5J6jSk" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

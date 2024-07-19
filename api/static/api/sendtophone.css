@@ -1,0 +1,34 @@
+body{
+    /* background-color: red; */
+    margin: 0;
+}
+.payment_item a {
+    text-decoration: none;
+    color: black;
+}
+.sendtophone_payment_div{
+    padding-top: 10vh;
+    /* margin-top: 0px; */
+    display: flex;
+    justify-content: space-evenly;
+}
+.sendtophone_payment_div a{
+    text-decoration: none;
+    color: black;
+
+}
+.send_money_btn{
+    background-color: #23074d;
+    width: 100%;
+    margin-top: 10px;
+    color: white;
+    border-radius: 6px;
+    padding: 9px 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+@media only screen and (max-width: 768px) {
+    .sendtophone_payment_div{
+        flex-direction: column;
+    }
+  }

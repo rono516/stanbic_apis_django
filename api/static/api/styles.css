@@ -1,0 +1,27 @@
+body{
+    /* background-color: black; */
+    /* color: white; */
+    margin: 0;
+}
+
+.payment_div{
+    /* display: flex;
+    justify-content: center; */
+    width: 50%;
+    /* border: 2px solid red;/ */
+    text-align: start;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10vh;
+    padding-left: 30px;
+}
+.payment_item{
+    /* color: red; */
+    /* color: black; */
+    /* margin-top: 30px; */
+}
+.payment_item a{
+    text-decoration: none;
+    /* color: red; */
+    color: black;
+}

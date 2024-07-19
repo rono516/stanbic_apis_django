@@ -1,0 +1,25 @@
+{
+  "dbsReferenceId": "98989271771176942",
+  "reasonCode": "209",
+  "bankStatus": "REJECTED",
+  "bankReferenceId": "",
+  "reasonText": "
+  FT24171QV1TJ/IIB241973917822087.01/-1/NO,DEST.ACCT.NO:1:1=Invalid Account,
+  DEST.ACCT.NO:1:1=Invalid Account,DEST.ACCT.NO:1:1=Invalid Account,
+  KITS.MOBILE.NO:1:1=Invalid Account,KITS.MOBILE.NO:1:1=Invalid Account,
+  KITS.MOBILE.NO:1:1=Invalid Account,DEBIT.ACCT.NO:1:1=ACCOUNT RECORD MISSING 0792009556,
+  DEBIT.ACCT.NO:1:1=VOSTRO/NORMAL ACCT MUST BE IN OUR COMPANY,DEBIT.ACCT.NO:1:1=DEBIT
+   AND CREDIT ACCOUNT POSITION TYPE NOT SAME,CHARGES.ACCT.NO:1:1=RECORD NOT FOUND,
+   T24.ERROR.CODE:1:1=209,"
+}
+
+
+I get an error when using https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/
+Here is a copy of the error "{
+  "dbsReferenceId": "98989271771176942",
+  "reasonCode": "209",
+  "bankStatus": "REJECTED",
+  "bankReferenceId": "",
+  "reasonText": "FT241982QHD2/IIB241992189945046.01/-1/NO,DEST.ACCT.NO:1:1=Invalid Account,
+  DEST.ACCT.NO:1:1=Invalid Account,DEST.ACCT.NO:1:1=Invalid Account,KITS.MOBILE.NO:1:1=Invalid Account,KITS.MOBILE.NO:1:1=Invalid Account,KITS.MOBILE.NO:1:1=Invalid Account,DEBIT.ACCT.NO:1:1=ACCOUNT RECORD MISSING 20029999411,DEBIT.ACCT.NO:1:1=VOSTRO/NORMAL ACCT MUST BE IN OUR COMPANY,DEBIT.ACCT.NO:1:1=DEBIT AND CREDIT ACCOUNT POSITION TYPE NOT SAME,CHARGES.ACCT.NO:1:1=RECORD NOT FOUND,T24.ERROR.CODE:1:1=209,"
+}". I do realize that it comes from an incorrect account number when creating a test app in your sandbox but that is a registered kbs account number. What kind of an account number am i supposed to use for testing if this does not work?

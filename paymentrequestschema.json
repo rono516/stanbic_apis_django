@@ -1,0 +1,143 @@
+{
+    "type": "object",
+    "description": "A Resftful(JSON) Payload request with the details required to initiate a pesalink payment. Instant payments are currently supported",
+    "required": [
+      "requestedExecutionDate",
+      "txnNarrative",
+      "dbsReferenceId",
+      "transferTransactionInformation",
+      "originatorAccount"
+    ],
+    "properties": {
+      "originatorAccount": {
+        "type": "object",
+        "properties": {
+          "identification": {
+            "type": "object",
+            "properties": {
+              "mobileNumber": {
+                "type": "string",
+                "example": "254737696956"
+              }
+            }
+          }
+        }
+      },
+      "requestedExecutionDate": {
+        "type": "string",
+        "example": "2021-10-27",
+        "description": "The current system date (EAT) in the format YYYY-MM-DD"
+      },
+      "sendMoneyTo": {
+        "type": "string",
+        "enum": [
+          "ACCOUNT.NUMBER"
+        ],
+        "description": "When sending to Account Number use ACCOUNT.NUMBER",
+        "example": "ACCOUNT.NUMBER"
+      },
+      "dbsReferenceId": {
+        "type": "string",
+        "example": "98989271771176942",
+        "description": "This is 3rd party system unique reference. Our systems will use this reference to track your transactions."
+      },
+      "txnNarrative": {
+        "type": "string",
+        "example": "TESTPESALINK"
+      },
+      "callBackUrl": {
+        "type": "string",
+        "example": "https://clientdomain.com/client/Callback",
+        "description": "Future use"
+      },
+      "transferTransactionInformation": {
+        "type": "object",
+        "properties": {
+          "instructedAmount": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "string",
+                "example": "500"
+              },
+              "currencyCode": {
+                "type": "string",
+                "example": "KES"
+              }
+            }
+          },
+          "counterpartyAccount": {
+            "type": "object",
+            "properties": {
+              "identification": {
+                "type": "object",
+                "properties": {
+                  "recipientMobileNo": {
+                    "type": "string",
+                    "example": "25472XXXXXXXX",
+                    "description": "When the Mobile Number is populated, The account Number should be left blank"
+                  },
+                  "recipientBankAcctNo": {
+                    "type": "string",
+                    "example": "01008747142",
+                    "description": "When account Number is populated"
+                  },
+                  "recipientBankCode": {
+                    "type": "string",
+                    "example": "07000"
+                  }
+                }
+              }
+            }
+          },
+          "counterparty": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "HEZBON"
+              },
+              "postalAddress": {
+                "type": "object",
+                "properties": {
+                  "addressLine": {
+                    "type": "string",
+                    "example": "KENYA"
+                  },
+                  "postCode": {
+                    "type": "string",
+                    "example": "1100 ZZ"
+                  },
+                  "town": {
+                    "type": "string",
+                    "example": "Nairobi"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "KE"
+                  }
+                }
+              }
+            }
+          },
+          "remittanceInformation": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "FEES PAYMENTS"
+              },
+              "content": {
+                "type": "string",
+                "example": "SALARY"
+              }
+            }
+          },
+          "endToEndIdentification": {
+            "type": "string",
+            "example": "5e1a3da132cc"
+          }
+        }
+      }
+    }
+  }
