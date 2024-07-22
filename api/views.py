@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
-client_id = "8721eba833943ccd29d6e74fb0bd937f"
-client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
+client_id = "709816b5a594cc46494ae0d004b2aad3"
+client_secret = "3683cd5277fa0534d4db66f456ec8482"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -66,6 +66,11 @@ example_body = {
 # 0100010483659 - account number
 # 8721eba833943ccd29d6e74fb0bd937f key
 # 7e1c5c1b1c298d71f39d49a77e28aeb4 secret
+
+# testkba2 Credentials
+# 0100013845845 - account number
+# 709816b5a594cc46494ae0d004b2aad3 key
+# 3683cd5277fa0534d4db66f456ec8482 secret
 def index(request):
   return render(request, "api/index.html")
 def sendtophone(request):
@@ -90,7 +95,7 @@ def auth_token(request):
 
 
 def make_payment(request):
-    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2YwHFclprTCh09XtBA7MlLuDS4UoovZtnGlE-lFdi3IY_ASQjZLNQD9pdAFeHXNfxNoEzec3_Akwnlnn09MEmrLxdXxh_xnRPn813Yex7k6A7hTRWEui-inUl_62o3sZyI"
+    access_token = "AAIgNzA5ODE2YjVhNTk0Y2M0NjQ5NGFlMGQwMDRiMmFhZDNv3Vl0KkYo6VUNG-rTIMpyLpwhyhwbAiax50y96KdF5WKSmhJDc8euMdsptnEuefM9kJp4gsZiYSE8tetkTawj48GC3WCD-fT7gAoJ1MQjSIXsHmR12HFrbrMLgO9Z6tw"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
 
     payload = {
