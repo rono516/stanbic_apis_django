@@ -6,47 +6,6 @@ client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
-example_body = {
-  "originatorAccount": {
-    "identification": {
-      "mobileNumber": "254737696956"
-    }
-  },
-  "requestedExecutionDate": "2021-10-27",
-  "sendMoneyTo": "ACCOUNT.NUMBER",
-  "dbsReferenceId": "98989271771176942",
-  "txnNarrative": "TESTPESALINK",
-  "callBackUrl": "https://clientdomain.com/client/Callback",
-  "transferTransactionInformation": {
-    "instructedAmount": {
-      "amount": "10",
-      "currencyCode": "KES"
-    },
-    "counterpartyAccount": {
-      "identification": {
-        # "recipientMobileNo": "25472XXXXXXXX",
-        "recipientBankAcctNo": "0100013845845",
-        "recipientBankCode": "31002"
-      }
-    },
-    "counterparty": {
-      "name": "HEZBON",
-      "postalAddress": {
-        "addressLine": "KENYA",
-        "postCode": "1100 ZZ",
-        "town": "Nairobi",
-        "country": "KE"
-      }
-    },
-    "remittanceInformation": {
-      "type": "FEES PAYMENTS",
-      "content": "SALARY"
-    },
-    "endToEndIdentification": "5e1a3da132cc"
-  }
-}
-
-
 # 01040304011
 # 20040304211
 # 20040304411
@@ -77,12 +36,19 @@ example_body = {
 # a6e7099e476feb6688935bfa38bbc183 key
 # 0f6eda38e4d19c51cd6a45d4976ab971 secret
 
+# test kbs stanbic
+# 0100013868365
+# key - bde1801356912a01adc1e2b50fc4879c
+# secret - 42a920ac85b542486ca5ca6ebbe57a60
+import json
 def index(request):
   return render(request, "api/index.html")
 def sendtophone(request):
   return render(request, "api/sendtophone.html")
 def sendtoaccount(request):
-  return render(request, "api/sendtoaccount.html")
+  with open("./resources/banks.json") as f:
+     banks = json.load(f)
+     return render(request, "api/sendtoaccount.html", {"banks": banks})
 
 def auth_token(request):
 
@@ -101,7 +67,7 @@ def auth_token(request):
 
 
 def make_payment(request):
-    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2Y0G1Lx4EBMhvYNMpTMdxA-87idXpOYEs46qcP9BznkwmV3_13YgGfz-00Uvb0aq3ngx5z42-tLDsrkU1oWBAqlSKjT1sqgTPgHB9QAawH8P3t6HzRNZcf6PTTG4Q9UXuM"
+    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2aY0WMtWSYGx2moTmZRl2nTPzGWX4wRvPT70aGpjHBJieWpalNwgzJw3SeCwb5GAlMdtbLR69YuyXUV-mlDVYiHgQsP5boCbgGbiICQ_iHW4Hg6t0fLIk7ZokOKPUCM-jQ"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
 
     payload = {
@@ -117,16 +83,16 @@ def make_payment(request):
         "callBackUrl": "https://clientdomain.com/client/Callback",
         "transferTransactionInformation": {
             "instructedAmount": {
-                "amount": "1",
+                "amount": "500",
                 "currencyCode": "KES"
             },
              "counterpartyAccount": {
                 "identification": {
                     "recipientMobileNo": "254792009556",
-                    # "recipientMobileNo": "254721615262",
-                    # "recipientBankAcctNo": "01008747142",
-                    "recipientBankAcctNo": "1220179020894",
-                    "recipientBankCode": "68175"
+                    # "recipientBankAcctNo": "1220179020894",
+                    # "recipientBankCode": "68175"
+                    "recipientBankAcctNo": "0100013868365",
+                    "recipientBankCode": "31000"
                 }
             },
             "counterparty": {
@@ -150,12 +116,11 @@ def make_payment(request):
         "content-type": "application/json",
         "accept": "application/json"
     }
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
+    # import logging
+    # logging.basicConfig(level=logging.DEBUG)
 
     response = requests.post(url, json=payload, headers=headers)
     return JsonResponse(response.json())
-
 
 
 
