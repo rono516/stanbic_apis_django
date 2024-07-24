@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
-client_id = "709816b5a594cc46494ae0d004b2aad3"
-client_secret = "3683cd5277fa0534d4db66f456ec8482"
+client_id = "8721eba833943ccd29d6e74fb0bd937f"
+client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -71,6 +71,12 @@ example_body = {
 # 0100013845845 - account number
 # 709816b5a594cc46494ae0d004b2aad3 key
 # 3683cd5277fa0534d4db66f456ec8482 secret
+
+# teststanbictwo Credentials
+# 0100013845845 - account number
+# a6e7099e476feb6688935bfa38bbc183 key
+# 0f6eda38e4d19c51cd6a45d4976ab971 secret
+
 def index(request):
   return render(request, "api/index.html")
 def sendtophone(request):
@@ -95,52 +101,50 @@ def auth_token(request):
 
 
 def make_payment(request):
-    access_token = "AAIgNzA5ODE2YjVhNTk0Y2M0NjQ5NGFlMGQwMDRiMmFhZDNv3Vl0KkYo6VUNG-rTIMpyLpwhyhwbAiax50y96KdF5WKSmhJDc8euMdsptnEuefM9kJp4gsZiYSE8tetkTawj48GC3WCD-fT7gAoJ1MQjSIXsHmR12HFrbrMLgO9Z6tw"
+    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2Y0G1Lx4EBMhvYNMpTMdxA-87idXpOYEs46qcP9BznkwmV3_13YgGfz-00Uvb0aq3ngx5z42-tLDsrkU1oWBAqlSKjT1sqgTPgHB9QAawH8P3t6HzRNZcf6PTTG4Q9UXuM"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
 
     payload = {
-        "originatorAccount": "01040304011",
-        # "identification": {
-        #     # "mobileNumber": "254737696956" 
-        #     "mobileNumber": "254721615262"
-        # },        
-        "requestedExecutionDate": "2024-7-17",
-        "sendMoneyTo": "0100010483659",
-        # "sendMoneyTo": "0710361783001",
+        "originatorAccount": {
+            "identification": {
+                "mobileNumber": "254721615262"
+            }
+        },
+        "requestedExecutionDate": "2021-10-27",
+        "sendMoneyTo": "ACCOUNT.NUMBER",
         "dbsReferenceId": "98989271771176942",
         "txnNarrative": "TESTPESALINK",
         "callBackUrl": "https://clientdomain.com/client/Callback",
         "transferTransactionInformation": {
-            "instructedAmount": "10" ,
-            # {
-            #     "amount": "10",
-            #     "currencyCode": "KES"
-            # },
-            "counterpartyAccount": {
+            "instructedAmount": {
+                "amount": "1",
+                "currencyCode": "KES"
+            },
+             "counterpartyAccount": {
                 "identification": {
-                    "recipientMobileNo": "254722716838",
+                    "recipientMobileNo": "254792009556",
                     # "recipientMobileNo": "254721615262",
-                    "recipientBankAcctNo": "0710361783001",
-                    "recipientBankCode": "31"
+                    # "recipientBankAcctNo": "01008747142",
+                    "recipientBankAcctNo": "1220179020894",
+                    "recipientBankCode": "68175"
                 }
             },
-            # "counterparty": {
-            #     "name": "HEZBON",
-            #     "postalAddress": {
-            #         "addressLine": "KENYA",
-            #         "postCode": "1100 ZZ",
-            #         "town": "Nairobi",
-            #         "country": "KE"
-            #     }
-            # },
-            # "remittanceInformation": {
-            #     "type": "FEES PAYMENTS",
-            #     "content": "SALARY"
-            # },
+            "counterparty": {
+                "name": "HEZBON",
+                "postalAddress": {
+                    "addressLine": "KENYA",
+                    "postCode": "1100 ZZ",
+                    "town": "Nairobi",
+                    "country": "KE"
+                }
+            },
+            "remittanceInformation": {
+                "type": "FEES PAYMENTS",
+                "content": "SALARY"
+            },
             "endToEndIdentification": "5e1a3da132cc"
         }
     }
-
     headers = {
         "Authorization": f"Bearer {access_token}",
         "content-type": "application/json",
@@ -149,7 +153,7 @@ def make_payment(request):
     import logging
     logging.basicConfig(level=logging.DEBUG)
 
-    response = requests.post(url, json=example_body, headers=headers)
+    response = requests.post(url, json=payload, headers=headers)
     return JsonResponse(response.json())
 
 
