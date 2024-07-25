@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
-client_id = "8721eba833943ccd29d6e74fb0bd937f"
-client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
+client_id = "bde1801356912a01adc1e2b50fc4879c"
+client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -40,6 +40,16 @@ scope = "payments"
 # 0100013868365
 # key - bde1801356912a01adc1e2b50fc4879c
 # secret - 42a920ac85b542486ca5ca6ebbe57a60
+
+# test eq
+# 1220179020894
+# key - 67ae5aaec82e9fcbc3d6ceb8dccaebff
+# secret - e35b374256973990c21e34d09f8ca78e
+
+# test kbs acc
+# 01040304011
+# key - eea0afa41279d8f8b6e4e8ecc90ba8c4
+# secret - 6a8f0089f42215accfc04d3877047435
 import json
 def index(request):
   return render(request, "api/index.html")
@@ -50,7 +60,7 @@ def sendtoaccount(request):
      banks = json.load(f)
      return render(request, "api/sendtoaccount.html", {"banks": banks})
 
-def auth_token(request):
+def get_auth_token():
 
     payload = {
     'grant_type': 'client_credentials',
@@ -59,7 +69,10 @@ def auth_token(request):
     'scope': scope
     }
     response = requests.post(token_url,data=payload)
-    return JsonResponse(response.json())
+    access_token = response.json().get("access_token")
+    # print(access_token)
+    # return JsonResponse(response.json())
+    return access_token
 
 
 
@@ -67,7 +80,8 @@ def auth_token(request):
 
 
 def make_payment(request):
-    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2aY0WMtWSYGx2moTmZRl2nTPzGWX4wRvPT70aGpjHBJieWpalNwgzJw3SeCwb5GAlMdtbLR69YuyXUV-mlDVYiHgQsP5boCbgGbiICQ_iHW4Hg6t0fLIk7ZokOKPUCM-jQ"
+    access_token = get_auth_token()
+    # access_token = "AAIgNjdhZTVhYWVjODJlOWZjYmMzZDZjZWI4ZGNjYWViZmYnJk8w6JFPAN-VlAqxIl4jdn0f9Fc7JCj3UPWIVZvfyLwV60N4bweRhPSdydyY9er-R-N-QB3JctB3xBip7bqzc5SNMnyUGzd_IdiB1fxmf4AoalEOa1sD5iGoIVDFug8"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
 
     payload = {
@@ -91,7 +105,7 @@ def make_payment(request):
                     "recipientMobileNo": "254792009556",
                     # "recipientBankAcctNo": "1220179020894",
                     # "recipientBankCode": "68175"
-                    "recipientBankAcctNo": "0100013868365",
+                    "recipientBankAcctNo": "0100010483659",
                     "recipientBankCode": "31000"
                 }
             },
