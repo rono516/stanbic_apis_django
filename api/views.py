@@ -71,7 +71,6 @@ def get_auth_token():
     response = requests.post(token_url,data=payload)
     access_token = response.json().get("access_token")
     # print(access_token)
-    # return JsonResponse(response.json())
     return access_token
 
 
@@ -81,6 +80,7 @@ def get_auth_token():
 
 def make_payment(request):
     access_token = get_auth_token()
+    print("access token" + access_token)
     # access_token = "AAIgNjdhZTVhYWVjODJlOWZjYmMzZDZjZWI4ZGNjYWViZmYnJk8w6JFPAN-VlAqxIl4jdn0f9Fc7JCj3UPWIVZvfyLwV60N4bweRhPSdydyY9er-R-N-QB3JctB3xBip7bqzc5SNMnyUGzd_IdiB1fxmf4AoalEOa1sD5iGoIVDFug8"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
 
@@ -103,10 +103,10 @@ def make_payment(request):
              "counterpartyAccount": {
                 "identification": {
                     "recipientMobileNo": "254792009556",
-                    # "recipientBankAcctNo": "1220179020894",
-                    # "recipientBankCode": "68175"
-                    "recipientBankAcctNo": "0100010483659",
-                    "recipientBankCode": "31000"
+                    "recipientBankAcctNo": "1220179020894",
+                    "recipientBankCode": "68175",
+                    # "recipientBankAcctNo": "0100010483659",
+                    # "recipientBankCode": "31000"
                 }
             },
             "counterparty": {
