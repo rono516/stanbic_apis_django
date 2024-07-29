@@ -155,44 +155,44 @@ def make_payment(request):
     return JsonResponse(response.json())
 
 def send_to_mobile_money(request):
-   send_money_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/mobile-payments"
+   send_money_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2Yp2bldk8UsTab7kvYNR_1aH_nW3NfRIkQb6ub85g5SL15bkXr5w_k8AZ3JwFZ-lbVl5cy0FnbMecZEt6AjLEcziDX-_yqtbIEUo6JT5IOvlBrS2cjyif94ZKdNa4-0CFA"
    payload = {
-      "originatorAccount": {
-        "identification": {
-          "mobileNumber": "2547200000000"
-        }
-      },
-      "requestedExecutionDate": "2024-07-29",
-      "dbsReferenceId": "21899424091958",
-      "txnNarrative": "TRANSACTION NARRATIVE",
-      "callBackUrl": "http://client_domain.com/omnichannel/esbCallback",
-      "transferTransactionInformation": {
-        "instructedAmount": {
-          "amount": "10",
-          "currencyCode": "KES"
-        },
-        "mobileMoneyMno": {
-          "name": "AIRTEL MONEY"
-        },
-        "counterparty": {
-          "name": "Collins Rono",
-          "mobileNumber": "254792009556",
-          "postalAddress": {
-            "addressLine1": "Juja street",
-            "addressLine2": "99",
-            "postCode": "1100 ZZ",
-            "town": "Amsterdam",
-            "country": "NL"
+        "originatorAccount": {
+          "identification": {
+            "mobileNumber": "254737696956"
           }
         },
-        "remittanceInformation": {
-          "type": "UNSTRUCTURED",
-          "content": "SALARY"
-        },
-        "endToEndIdentification": "5e1a3da132cc"
+        "requestedExecutionDate": "2021-10-27",
+        "dbsReferenceId": "98989271771176942",
+        "txnNarrative": "TESTPESALINK",
+        "callBackUrl": "https://clientdomain.com/client/Callback",
+        "transferTransactionInformation": {
+          "instructedAmount": {
+            "amount": "500",
+            "currencyCode": "KES"
+          },
+          "counterpartyAccount": {
+            "identification": {
+              "recipientMobileNo": "254792009556",
+            }
+          },
+          "counterparty": {
+            "name": "HEZBON",
+            "postalAddress": {
+              "addressLine": "KENYA",
+              "postCode": "1100 ZZ",
+              "town": "Nairobi",
+              "country": "KE"
+            }
+          },
+          "remittanceInformation": {
+            "type": "FEES PAYMENTS",
+            "content": "SALARY"
+          },
+          "endToEndIdentification": "5e1a3da132cc"
+        }
       }
-    }
    headers = {
         "Authorization": f"Bearer {access_token}",
         "content-type": "application/json",
