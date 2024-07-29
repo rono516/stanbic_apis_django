@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
-client_id = "bde1801356912a01adc1e2b50fc4879c"
-client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
+client_id = "8721eba833943ccd29d6e74fb0bd937f"
+client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -50,17 +50,37 @@ scope = "payments"
 # 01040304011
 # key - eea0afa41279d8f8b6e4e8ecc90ba8c4
 # secret - 6a8f0089f42215accfc04d3877047435
+
+# test support acc
+# 0100013644707
+# key - 3c5d6214a1d2800edd8c07b2ce67bcd1
+# secret - cd07e4af60866b90c233ebbb99e824a7
 import json
 def index(request):
   return render(request, "api/index.html")
 def sendtophone(request):
   return render(request, "api/sendtophone.html")
 def sendtoaccount(request):
-  with open("./resources/banks.json") as f:
+  # api\resources\banks.json
+  with open("api/resources/banks.json") as f:
      banks = json.load(f)
      return render(request, "api/sendtoaccount.html", {"banks": banks})
 
-def get_auth_token():
+# def get_auth_token():
+
+#     payload = {
+#     'grant_type': 'client_credentials',
+#     'client_id': client_id,
+#     'client_secret': client_secret,
+#     'scope': scope
+#     }
+#     response = requests.post(token_url,data=payload)
+#     access_token = response.json().get("access_token")
+#     # print(access_token)
+#     return access_token
+# here we are coding in the hope that we don't produce bad code 
+
+def get_auth_token(request):
 
     payload = {
     'grant_type': 'client_credentials',
@@ -69,18 +89,15 @@ def get_auth_token():
     'scope': scope
     }
     response = requests.post(token_url,data=payload)
-    access_token = response.json().get("access_token")
-    # print(access_token)
-    return access_token
-
+    return JsonResponse(response.json())
 
 
 
 
 
 def make_payment(request):
-    access_token = get_auth_token()
-    print("access token" + access_token)
+    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2bcxjhtQTnDmZF8FRoTQ0FUvhvV0Dx0JeCt5aLaHO4pnvHAoZVVWnjIWLJ2XnWr0_Q6VpE91PS4lbaBfWrqHpa7weBuJ3QysyuvV7Jd2vye-dR5_EXdKX6k4pxu7gQ4b70"
+    # print("access token" + access_token)
     # access_token = "AAIgNjdhZTVhYWVjODJlOWZjYmMzZDZjZWI4ZGNjYWViZmYnJk8w6JFPAN-VlAqxIl4jdn0f9Fc7JCj3UPWIVZvfyLwV60N4bweRhPSdydyY9er-R-N-QB3JctB3xBip7bqzc5SNMnyUGzd_IdiB1fxmf4AoalEOa1sD5iGoIVDFug8"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
 
@@ -90,22 +107,23 @@ def make_payment(request):
                 "mobileNumber": "254721615262"
             }
         },
-        "requestedExecutionDate": "2021-10-27",
+        "requestedExecutionDate": "2024-07-26",
         "sendMoneyTo": "ACCOUNT.NUMBER",
         "dbsReferenceId": "98989271771176942",
         "txnNarrative": "TESTPESALINK",
         "callBackUrl": "https://clientdomain.com/client/Callback",
         "transferTransactionInformation": {
             "instructedAmount": {
-                "amount": "500",
+                "amount": "10",
                 "currencyCode": "KES"
             },
              "counterpartyAccount": {
                 "identification": {
-                    "recipientMobileNo": "254792009556",
+                    # "recipientMobileNo": "254792009556",
                     "recipientBankAcctNo": "1220179020894",
-                    "recipientBankCode": "68175",
-                    # "recipientBankAcctNo": "0100010483659",
+                    "recipientBankCode": "68012",   
+                    # "recipientBankAcctNo": "20040304211",
+                    
                     # "recipientBankCode": "31000"
                 }
             },
@@ -136,7 +154,53 @@ def make_payment(request):
     response = requests.post(url, json=payload, headers=headers)
     return JsonResponse(response.json())
 
-
+def send_to_mobile_money(request):
+   send_money_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/mobile-payments"
+   access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2Yp2bldk8UsTab7kvYNR_1aH_nW3NfRIkQb6ub85g5SL15bkXr5w_k8AZ3JwFZ-lbVl5cy0FnbMecZEt6AjLEcziDX-_yqtbIEUo6JT5IOvlBrS2cjyif94ZKdNa4-0CFA"
+   payload = {
+      "originatorAccount": {
+        "identification": {
+          "mobileNumber": "2547200000000"
+        }
+      },
+      "requestedExecutionDate": "2024-07-29",
+      "dbsReferenceId": "21899424091958",
+      "txnNarrative": "TRANSACTION NARRATIVE",
+      "callBackUrl": "http://client_domain.com/omnichannel/esbCallback",
+      "transferTransactionInformation": {
+        "instructedAmount": {
+          "amount": "10",
+          "currencyCode": "KES"
+        },
+        "mobileMoneyMno": {
+          "name": "AIRTEL MONEY"
+        },
+        "counterparty": {
+          "name": "Collins Rono",
+          "mobileNumber": "254792009556",
+          "postalAddress": {
+            "addressLine1": "Juja street",
+            "addressLine2": "99",
+            "postCode": "1100 ZZ",
+            "town": "Amsterdam",
+            "country": "NL"
+          }
+        },
+        "remittanceInformation": {
+          "type": "UNSTRUCTURED",
+          "content": "SALARY"
+        },
+        "endToEndIdentification": "5e1a3da132cc"
+      }
+    }
+   headers = {
+        "Authorization": f"Bearer {access_token}",
+        "content-type": "application/json",
+        "accept": "application/json"
+    }
+   response = requests.post(send_money_url, json=payload, headers=headers)
+   return JsonResponse(response.json())
+  #  print("Here we are")
 
 schema = {
   "type": "object",

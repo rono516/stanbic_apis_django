@@ -30,10 +30,16 @@
       <div class="card p-4">
         <p class="h5">Send to Account</p>
         <form action="">
+          {% csrf_token %}
           <div class="form-group">
             <label for="bank">Select Bank</label>
             <select class="form-control" name="bank" id="bank">
-              <option value="equity">Equity</option>
+            
+              {% comment %} <option value="">Equity</option> {% endcomment %}
+              {{% for bank in  banks %}
+                <option value="{{ bank.code }}">{{ bank.name }}</option>
+              
+              {% endfor %}}
             </select>
           </div>
           
