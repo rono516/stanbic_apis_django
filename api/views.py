@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
-client_id = "8721eba833943ccd29d6e74fb0bd937f"
-client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
+client_id = "eea0afa41279d8f8b6e4e8ecc90ba8c4"
+client_secret = "6a8f0089f42215accfc04d3877047435"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -92,11 +92,49 @@ def get_auth_token(request):
     return JsonResponse(response.json())
 
 
-
+example_body = {
+  "originatorAccount": {
+    "identification": {
+      "mobileNumber": "254737696956"
+    }
+  },
+  "requestedExecutionDate": "2021-10-27",
+  "sendMoneyTo": "ACCOUNT.NUMBER",
+  "dbsReferenceId": "98989271771176942",
+  "txnNarrative": "TESTPESALINK",
+  "callBackUrl": "https://clientdomain.com/client/Callback",
+  "transferTransactionInformation": {
+    "instructedAmount": {
+      "amount": "500",
+      "currencyCode": "KES"
+    },
+    "counterpartyAccount": {
+      "identification": {
+        "recipientMobileNo": "25472XXXXXXXX",
+        "recipientBankAcctNo": "01008747142",
+        "recipientBankCode": "07000"
+      }
+    },
+    "counterparty": {
+      "name": "HEZBON",
+      "postalAddress": {
+        "addressLine": "KENYA",
+        "postCode": "1100 ZZ",
+        "town": "Nairobi",
+        "country": "KE"
+      }
+    },
+    "remittanceInformation": {
+      "type": "FEES PAYMENTS",
+      "content": "SALARY"
+    },
+    "endToEndIdentification": "5e1a3da132cc"
+  }
+}
 
 
 def make_payment(request):
-    access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2bcxjhtQTnDmZF8FRoTQ0FUvhvV0Dx0JeCt5aLaHO4pnvHAoZVVWnjIWLJ2XnWr0_Q6VpE91PS4lbaBfWrqHpa7weBuJ3QysyuvV7Jd2vye-dR5_EXdKX6k4pxu7gQ4b70"
+    access_token = "AAIgZWVhMGFmYTQxMjc5ZDhmOGI2ZTRlOGVjYzkwYmE4YzRXOjezOlHlXE5yGAui3Z5NleXMvch6Cmf6rBy1_x0WBBt1Lj1MW2_XaTqOEh5TUBGicM1gF0AvPNKrPTrAWxT6UXWf8XZpX8czMtygfhgJK0wvxqh0l9cXoFYeEbMqe04"
     # print("access token" + access_token)
     # access_token = "AAIgNjdhZTVhYWVjODJlOWZjYmMzZDZjZWI4ZGNjYWViZmYnJk8w6JFPAN-VlAqxIl4jdn0f9Fc7JCj3UPWIVZvfyLwV60N4bweRhPSdydyY9er-R-N-QB3JctB3xBip7bqzc5SNMnyUGzd_IdiB1fxmf4AoalEOa1sD5iGoIVDFug8"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
@@ -151,7 +189,7 @@ def make_payment(request):
     # import logging
     # logging.basicConfig(level=logging.DEBUG)
 
-    response = requests.post(url, json=payload, headers=headers)
+    response = requests.post(url, json=example_body, headers=headers)
     return JsonResponse(response.json())
 
 def send_to_mobile_money(request):
@@ -202,190 +240,6 @@ def send_to_mobile_money(request):
    return JsonResponse(response.json())
   #  print("Here we are")
 
-schema = {
-  "type": "object",
-  "description": "A Resftful(JSON) Payload request with the details required to initiate a pesalink payment. Instant payments are currently supported",
-  "required": [
-    "requestedExecutionDate",
-    "txnNarrative",
-    "dbsReferenceId",
-    "transferTransactionInformation",
-    "originatorAccount"
-  ],
-  "properties": {
-    "originatorAccount": {
-      "type": "object",
-      "properties": {
-        "identification": {
-          "type": "object",
-          "properties": {
-            "mobileNumber": {
-              "type": "string",
-              "example": "254737696956"
-            }
-          }
-        }
-      }
-    },
-    "requestedExecutionDate": {
-      "type": "string",
-      "example": "2021-10-27",
-      "description": "The current system date (EAT) in the format YYYY-MM-DD"
-    },
-    "sendMoneyTo": {
-      "type": "string",
-      "enum": [
-        "ACCOUNT.NUMBER"
-      ],
-      "description": "When sending to Account Number use ACCOUNT.NUMBER",
-      "example": "ACCOUNT.NUMBER"
-    },
-    "dbsReferenceId": {
-      "type": "string",
-      "example": "98989271771176942",
-      "description": "This is 3rd party system unique reference. Our systems will use this reference to track your transactions."
-    },
-    "txnNarrative": {
-      "type": "string",
-      "example": "TESTPESALINK"
-    },
-    "callBackUrl": {
-      "type": "string",
-      "example": "https://clientdomain.com/client/Callback",
-      "description": "Future use"
-    },
-    "transferTransactionInformation": {
-      "type": "object",
-      "properties": {
-        "instructedAmount": {
-          "type": "object",
-          "properties": {
-            "amount": {
-              "type": "string",
-              "example": "500"
-            },
-            "currencyCode": {
-              "type": "string",
-              "example": "KES"
-            }
-          }
-        },
-        "counterpartyAccount": {
-          "type": "object",
-          "properties": {
-            "identification": {
-              "type": "object",
-              "properties": {
-                "recipientMobileNo": {
-                  "type": "string",
-                  "example": "25472XXXXXXXX",
-                  "description": "When the Mobile Number is populated, The account Number should be left blank"
-                },
-                "recipientBankAcctNo": {
-                  "type": "string",
-                  "example": "01008747142",
-                  "description": "When account Number is populated"
-                },
-                "recipientBankCode": {
-                  "type": "string",
-                  "example": "07000"
-                }
-              }
-            }
-          }
-        },
-        "counterparty": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "example": "HEZBON"
-            },
-            "postalAddress": {
-              "type": "object",
-              "properties": {
-                "addressLine": {
-                  "type": "string",
-                  "example": "KENYA"
-                },
-                "postCode": {
-                  "type": "string",
-                  "example": "1100 ZZ"
-                },
-                "town": {
-                  "type": "string",
-                  "example": "Nairobi"
-                },
-                "country": {
-                  "type": "string",
-                  "example": "KE"
-                }
-              }
-            }
-          }
-        },
-        "remittanceInformation": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "example": "FEES PAYMENTS"
-            },
-            "content": {
-              "type": "string",
-              "example": "SALARY"
-            }
-          }
-        },
-        "endToEndIdentification": {
-          "type": "string",
-          "example": "5e1a3da132cc"
-        }
-      }
-    }
-  }
-}
-
-
-
-# test example
-# {
-#   "originatorAccount": "01040304011" {
-#     # "accountNumber" :"01040304011",
-#     "identification": {
-#       "mobileNumber": "254721615262"
-#     }
-#   },
-#   "requestedExecutionDate": "2021-10-27",
-#   "sendMoneyTo": "0710361783001",
-#   "dbsReferenceId": "98989271771176942",
-#   "txnNarrative": "TESTPESALINK",
-#   "callBackUrl": "https://clientdomain.com/client/Callback",
-#   "transferTransactionInformation": {
-#     "instructedAmount": "10" {
-#       # "amount": "500",
-#       "currencyCode": "KES"
-#     },
-#     "counterpartyAccount": "01040304011" {
-#       "identification": {
-#         "recipientMobileNo": "254721615262",
-#         "recipientBankAcctNo": "0710361783001",
-#         "recipientBankCode": "63"
-#       }
-#     },
-#     "counterparty": {
-#       "name": "HEZBON",
-#       "postalAddress": {
-#         "addressLine": "KENYA",
-#         "postCode": "1100 ZZ",
-#         "town": "Nairobi",
-#         "country": "KE"
-#       }
-#     },
-#     "remittanceInformation": {
-#       "type": "FEES PAYMENTS",
-#       "content": "SALARY"
-#     },
-#     "endToEndIdentification": "5e1a3da132cc"
-#   }
-# }
+def rtgs(request):
+   rtgs_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/rtgs-payments"
+   return rtgs_url
