@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
-client_id = "eea0afa41279d8f8b6e4e8ecc90ba8c4"
-client_secret = "6a8f0089f42215accfc04d3877047435"
+client_id = "8721eba833943ccd29d6e74fb0bd937f"
+client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -66,19 +66,18 @@ def sendtoaccount(request):
      banks = json.load(f)
      return render(request, "api/sendtoaccount.html", {"banks": banks})
 
-# def get_auth_token():
+def return_auth_token():
 
-#     payload = {
-#     'grant_type': 'client_credentials',
-#     'client_id': client_id,
-#     'client_secret': client_secret,
-#     'scope': scope
-#     }
-#     response = requests.post(token_url,data=payload)
-#     access_token = response.json().get("access_token")
-#     # print(access_token)
-#     return access_token
-# here we are coding in the hope that we don't produce bad code 
+    payload = {
+    'grant_type': 'client_credentials',
+    'client_id': client_id,
+    'client_secret': client_secret,
+    'scope': scope
+    }
+    response = requests.post(token_url,data=payload)
+    access_token = response.json().get("access_token")
+    # print(access_token)
+    return access_token
 
 def get_auth_token(request):
 
@@ -105,7 +104,7 @@ example_body = {
   "callBackUrl": "https://clientdomain.com/client/Callback",
   "transferTransactionInformation": {
     "instructedAmount": {
-      "amount": "500",
+      "amount": "10",
       "currencyCode": "KES"
     },
     "counterpartyAccount": {
@@ -134,7 +133,7 @@ example_body = {
 
 
 def make_payment(request):
-    access_token = "AAIgZWVhMGFmYTQxMjc5ZDhmOGI2ZTRlOGVjYzkwYmE4YzRXOjezOlHlXE5yGAui3Z5NleXMvch6Cmf6rBy1_x0WBBt1Lj1MW2_XaTqOEh5TUBGicM1gF0AvPNKrPTrAWxT6UXWf8XZpX8czMtygfhgJK0wvxqh0l9cXoFYeEbMqe04"
+    access_token = return_auth_token()
     # print("access token" + access_token)
     # access_token = "AAIgNjdhZTVhYWVjODJlOWZjYmMzZDZjZWI4ZGNjYWViZmYnJk8w6JFPAN-VlAqxIl4jdn0f9Fc7JCj3UPWIVZvfyLwV60N4bweRhPSdydyY9er-R-N-QB3JctB3xBip7bqzc5SNMnyUGzd_IdiB1fxmf4AoalEOa1sD5iGoIVDFug8"
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
@@ -152,14 +151,16 @@ def make_payment(request):
         "callBackUrl": "https://clientdomain.com/client/Callback",
         "transferTransactionInformation": {
             "instructedAmount": {
-                "amount": "10",
+                "amount": "100",
                 "currencyCode": "KES"
             },
              "counterpartyAccount": {
                 "identification": {
                     # "recipientMobileNo": "254792009556",
                     "recipientBankAcctNo": "1220179020894",
-                    "recipientBankCode": "68012",   
+                    "recipientBankCode": "68175",   
+                    # "recipientBankAcctNo": "0100013644707",
+                    # "recipientBankCode": "31030",   
                     # "recipientBankAcctNo": "20040304211",
                     
                     # "recipientBankCode": "31000"
@@ -189,7 +190,7 @@ def make_payment(request):
     # import logging
     # logging.basicConfig(level=logging.DEBUG)
 
-    response = requests.post(url, json=example_body, headers=headers)
+    response = requests.post(url, json=payload, headers=headers)
     return JsonResponse(response.json())
 
 def send_to_mobile_money(request):
