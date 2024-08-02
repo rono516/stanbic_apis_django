@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
-client_id = "8721eba833943ccd29d6e74fb0bd937f"
-client_secret = "7e1c5c1b1c298d71f39d49a77e28aeb4"
+client_id = "bde1801356912a01adc1e2b50fc4879c"
+client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -144,30 +144,29 @@ def make_payment(request):
                 "mobileNumber": "254721615262"
             }
         },
-        "requestedExecutionDate": "2024-07-26",
+        "requestedExecutionDate": "2024-08-02",
         "sendMoneyTo": "ACCOUNT.NUMBER",
-        "dbsReferenceId": "98989271771176942",
+        "dbsReferenceId": "98989271771176944",
         "txnNarrative": "TESTPESALINK",
         "callBackUrl": "https://clientdomain.com/client/Callback",
         "transferTransactionInformation": {
             "instructedAmount": {
-                "amount": "100",
+                "amount": "11",
                 "currencyCode": "KES"
             },
              "counterpartyAccount": {
                 "identification": {
                     # "recipientMobileNo": "254792009556",
-                    "recipientBankAcctNo": "1220179020894",
-                    "recipientBankCode": "68175",   
+                    # "recipientBankAcctNo": "1220179020894",
+                    # "recipientBankCode": "68175",  # equity 
                     # "recipientBankAcctNo": "0100013644707",
-                    # "recipientBankCode": "31030",   
-                    # "recipientBankAcctNo": "20040304211",
-                    
-                    # "recipientBankCode": "31000"
+                    # "recipientBankCode": "31030", # stanbic 
+                    "recipientBankAcctNo": "01120000564000",
+                    "recipientBankCode": "11170", #cooperative
                 }
             },
             "counterparty": {
-                "name": "HEZBON",
+                "name": "HEZBONA",
                 "postalAddress": {
                     "addressLine": "KENYA",
                     "postCode": "1100 ZZ",
