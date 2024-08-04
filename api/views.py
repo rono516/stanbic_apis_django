@@ -3,8 +3,8 @@ import requests
 from django.shortcuts import render
 client_id = "bde1801356912a01adc1e2b50fc4879c"
 client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
-rtgs_client_id ="a6e7099e476feb6688935bfa38bbc183"
-rtgs_client_secret="0f6eda38e4d19c51cd6a45d4976ab971"
+# rtgs_client_id ="a6e7099e476feb6688935bfa38bbc183"
+# rtgs_client_secret="0f6eda38e4d19c51cd6a45d4976ab971"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -83,8 +83,8 @@ def return_auth_token():
 def return_rtgs_auth_token():
   payload = {
     'grant_type': 'client_credentials',
-    'client_id': rtgs_client_id,
-    'client_secret': rtgs_client_secret,
+    'client_id': client_id,
+    'client_secret': client_secret,
     'scope': scope
   }
   response = requests.post(token_url,data=payload)
@@ -158,7 +158,7 @@ def make_payment(request):
         },
         "requestedExecutionDate": "2024-08-02",
         "sendMoneyTo": "ACCOUNT.NUMBER",
-        "dbsReferenceId": "98989271771176944",
+        "dbsReferenceId": "98989271771176946",
         "txnNarrative": "TESTPESALINK",
         "callBackUrl": "https://clientdomain.com/client/Callback",
         "transferTransactionInformation": {
@@ -206,7 +206,7 @@ def make_payment(request):
 
 def send_to_mobile_money(request):
    send_money_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
-   access_token = "AAIgODcyMWViYTgzMzk0M2NjZDI5ZDZlNzRmYjBiZDkzN2Yp2bldk8UsTab7kvYNR_1aH_nW3NfRIkQb6ub85g5SL15bkXr5w_k8AZ3JwFZ-lbVl5cy0FnbMecZEt6AjLEcziDX-_yqtbIEUo6JT5IOvlBrS2cjyif94ZKdNa4-0CFA"
+   access_token = return_auth_token()
    payload = {
         "originatorAccount": {
           "identification": {
@@ -240,7 +240,7 @@ def send_to_mobile_money(request):
             "type": "FEES PAYMENTS",
             "content": "SALARY"
           },
-          "endToEndIdentification": "5e1a3da132cc"
+          # "endToEndIdentification": "5e1a3da132cc"
         }
       }
    headers = {
@@ -254,38 +254,39 @@ def send_to_mobile_money(request):
 
 def rtgs(request):
 
-  access_token = return_rtgs_auth_token()
+  access_token = return_auth_token()
   url = "https://api.connect.stanbicbank.co.ke/api/sandbox/rtgs-payments/"
-  payload = {
+
+  payload ={
       "originatorAccount": {
         "identification": {
-          "identification": "0100001536723",
+          "identification": "1220179020894",
           "debitCurrency": "KES",
-          "mobileNumber": "254735084266"
+          "mobileNumber": "254792009556"
         }
       },
-      "requestedExecutionDate": "2021-06-03",
+      "requestedExecutionDate": "2024-08-06",
       "dbsReferenceId": "989892717711",
       "txnNarrative": "TESEAPS123",
       "transferTransactionInformation": {
         "instructedAmount": {
-          "amount": "500",
-          "creditCurrency": "UGX"
+          "amount": "50",
+          "creditCurrency": "KES"
         },
         "counterpartyAccount": {
           "identification": {
-            "identification": "9877665554",
-            "beneficiaryBank": "SW-CERBUGKA",
+            "identification": "00105011763050",
+            "beneficiaryBank": "IMBLKENA",
             "beneficiaryChargeType": "OUR"
           }
         },
         "counterparty": {
-          "name": "TAAM OIL LTD",
+          "name": "Collins K Rono",
           "postalAddress": {
-            "addressLine": "UGANDA",
+            "addressLine": "KENYA",
             "postCode": "1100 ZZ",
-            "town": "Kampala",
-            "country": "UG"
+            "town": "Nairobi",
+            "country": "KE"
           }
         },
         "remittanceInformation": {
@@ -300,6 +301,6 @@ def rtgs(request):
       "content-type": "application/json",
       "accept": "application/json'"
   }
-  response = requests.post(url, data=payload, headers=headers)
+  response = requests.post(url, json=payload, headers=headers)
   print(response)
   return JsonResponse(response.json())

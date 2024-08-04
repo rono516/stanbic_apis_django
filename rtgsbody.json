@@ -1,0 +1,130 @@
+{
+    "type": "object",
+    "properties": {
+      "originatorAccount": {
+        "type": "object",
+        "properties": {
+          "identification": {
+            "type": "object",
+            "properties": {
+              "identification": {
+                "type": "string",
+                "example": "0100001536723"
+              },
+              "debitCurrency": {
+                "type": "string",
+                "example": "KES"
+              },
+              "mobileNumber": {
+                "type": "string",
+                "example": "254735084266"
+              }
+            }
+          }
+        }
+      },
+      "requestedExecutionDate": {
+        "type": "string",
+        "example": "2021-06-03"
+      },
+      "dbsReferenceId": {
+        "type": "string",
+        "example": "989892717711"
+      },
+      "txnNarrative": {
+        "type": "string",
+        "example": "TESEAPS123"
+      },
+      "transferTransactionInformation": {
+        "type": "object",
+        "properties": {
+          "instructedAmount": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "string",
+                "example": "500"
+              },
+              "creditCurrency": {
+                "type": "string",
+                "example": "UGX"
+              }
+            }
+          },
+          "counterpartyAccount": {
+            "type": "object",
+            "properties": {
+              "identification": {
+                "type": "object",
+                "properties": {
+                  "identification": {
+                    "type": "string",
+                    "example": "9877665554"
+                  },
+                  "beneficiaryBank": {
+                    "type": "string",
+                    "example": "SW-CERBUGKA"
+                  },
+                  "beneficiaryChargeType": {
+                    "type": "string",
+                    "enum": [
+                      "SHA",
+                      "BEN",
+                      "OUR"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "counterparty": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "TAAM OIL LTD"
+              },
+              "postalAddress": {
+                "type": "object",
+                "properties": {
+                  "addressLine": {
+                    "type": "string",
+                    "example": "UGANDA"
+                  },
+                  "postCode": {
+                    "type": "string",
+                    "example": "1100 ZZ"
+                  },
+                  "town": {
+                    "type": "string",
+                    "example": "Kampala"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "UG"
+                  }
+                }
+              }
+            }
+          },
+          "remittanceInformation": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "UNSTRUCTURED"
+              },
+              "content": {
+                "type": "string",
+                "example": "SCHOOL FEES"
+              }
+            }
+          },
+          "endToEndIdentification": {
+            "type": "string",
+            "example": "5e1a3da132cc"
+          }
+        }
+      }
+    }
+  }
