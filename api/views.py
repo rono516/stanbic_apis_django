@@ -3,6 +3,8 @@ import requests
 from django.shortcuts import render
 client_id = "bde1801356912a01adc1e2b50fc4879c"
 client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
+rtgs_client_id ="a6e7099e476feb6688935bfa38bbc183"
+rtgs_client_secret="0f6eda38e4d19c51cd6a45d4976ab971"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -78,6 +80,16 @@ def return_auth_token():
     access_token = response.json().get("access_token")
     # print(access_token)
     return access_token
+def return_rtgs_auth_token():
+  payload = {
+    'grant_type': 'client_credentials',
+    'client_id': rtgs_client_id,
+    'client_secret': rtgs_client_secret,
+    'scope': scope
+  }
+  response = requests.post(token_url,data=payload)
+  acess_token = response.json().get("access_token")
+  return acess_token
 
 def get_auth_token(request):
 
@@ -158,9 +170,9 @@ def make_payment(request):
                 "identification": {
                     # "recipientMobileNo": "254792009556",
                     # "recipientBankAcctNo": "1220179020894",
-                    # "recipientBankCode": "68175",  # equity 
+                    # "recipientBankCode": "68175",  # equity
                     # "recipientBankAcctNo": "0100013644707",
-                    # "recipientBankCode": "31030", # stanbic 
+                    # "recipientBankCode": "31030", # stanbic
                     "recipientBankAcctNo": "01120000564000",
                     "recipientBankCode": "11170", #cooperative
                 }
@@ -241,5 +253,53 @@ def send_to_mobile_money(request):
   #  print("Here we are")
 
 def rtgs(request):
-   rtgs_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/rtgs-payments"
-   return rtgs_url
+
+  access_token = return_rtgs_auth_token()
+  url = "https://api.connect.stanbicbank.co.ke/api/sandbox/rtgs-payments/"
+  payload = {
+      "originatorAccount": {
+        "identification": {
+          "identification": "0100001536723",
+          "debitCurrency": "KES",
+          "mobileNumber": "254735084266"
+        }
+      },
+      "requestedExecutionDate": "2021-06-03",
+      "dbsReferenceId": "989892717711",
+      "txnNarrative": "TESEAPS123",
+      "transferTransactionInformation": {
+        "instructedAmount": {
+          "amount": "500",
+          "creditCurrency": "UGX"
+        },
+        "counterpartyAccount": {
+          "identification": {
+            "identification": "9877665554",
+            "beneficiaryBank": "SW-CERBUGKA",
+            "beneficiaryChargeType": "OUR"
+          }
+        },
+        "counterparty": {
+          "name": "TAAM OIL LTD",
+          "postalAddress": {
+            "addressLine": "UGANDA",
+            "postCode": "1100 ZZ",
+            "town": "Kampala",
+            "country": "UG"
+          }
+        },
+        "remittanceInformation": {
+          "type": "UNSTRUCTURED",
+          "content": "SCHOOL FEES"
+        },
+        "endToEndIdentification": "5e1a3da132cc"
+      }
+    }
+  headers = {
+      "Authorization": f"Bearer {access_token}",
+      "content-type": "application/json",
+      "accept": "application/json'"
+  }
+  response = requests.post(url, data=payload, headers=headers)
+  print(response)
+  return JsonResponse(response.json())
