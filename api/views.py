@@ -304,3 +304,17 @@ def rtgs(request):
   response = requests.post(url, json=payload, headers=headers)
   print(response)
   return JsonResponse(response.json())
+
+def swift_payment(request):
+  #  print("Here we are")
+  access_token = return_auth_token()
+  url = "https://api.connect.stanbicbank.co.ke/api/sandbox/swift-payments/"
+  headers = {
+     "Authorization": f"Bearer {access_token}",
+     "content-type": "application/json",
+     "accept": "application/json"
+  }
+  payload = ""
+  response = requests.post(url=url,headers=headers,json=payload)
+  print("response "+response)
+  return JsonResponse(response.json())
