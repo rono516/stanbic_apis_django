@@ -3,8 +3,6 @@ import requests
 from django.shortcuts import render
 client_id = "bde1801356912a01adc1e2b50fc4879c"
 client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
-# rtgs_client_id ="a6e7099e476feb6688935bfa38bbc183"
-# rtgs_client_secret="0f6eda38e4d19c51cd6a45d4976ab971"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
 scope = "payments"
 
@@ -144,7 +142,7 @@ example_body = {
 }
 
 
-def make_payment(request):
+def pesalink(request):
     access_token = return_auth_token()
     # print("access token" + access_token)
     # access_token = "AAIgNjdhZTVhYWVjODJlOWZjYmMzZDZjZWI4ZGNjYWViZmYnJk8w6JFPAN-VlAqxIl4jdn0f9Fc7JCj3UPWIVZvfyLwV60N4bweRhPSdydyY9er-R-N-QB3JctB3xBip7bqzc5SNMnyUGzd_IdiB1fxmf4AoalEOa1sD5iGoIVDFug8"
@@ -266,7 +264,7 @@ def rtgs(request):
         }
       },
       "requestedExecutionDate": "2024-08-06",
-      "dbsReferenceId": "989892717711",
+      "dbsReferenceId": "9898927177110",
       "txnNarrative": "TESEAPS123",
       "transferTransactionInformation": {
         "instructedAmount": {
@@ -314,7 +312,54 @@ def swift_payment(request):
      "content-type": "application/json",
      "accept": "application/json"
   }
-  payload = ""
+  payload = {
+      "originatorAccount": {
+        "identification": {
+          "identification": "1220179020894",
+          "debitCurrency": "KES",
+          "mobileNumber": "254792009556"
+        }
+      },
+      "requestedExecutionDate": "2021-05-27",
+      "dbsReferenceId": "989892717711908",
+      "txnNarrative": "TESEAPS123",
+      "callBackUrl": "https://clientdomain.com/client/Callback",
+      "schedule": {
+        "transferFrequency": "MONTHLY",
+        "on": "12",
+        "startDate": "2021-02-13",
+        "endDate": "2022-01-03",
+        "repeat": "3",
+        "every": "1"
+      },
+      "transferTransactionInformation": {
+        "instructedAmount": {
+          "amount": "50",
+          "creditCurrency": "KES"
+        },
+        "counterpartyAccount": {
+          "identification": {
+            "identification": "00105011763050",
+            "correspondentBank": "UGBAUGKAXXX",
+            "beneficiaryBank": "IMBLKENA"
+          }
+        },
+        "counterparty": {
+          "name": "TAAM OIL LTD",
+          "postalAddress": {
+            "addressLine": "UGANDA",
+            "postCode": "1100 ZZ",
+            "town": "Kampala",
+            "country": "UG"
+          }
+        },
+        "remittanceInformation": {
+          "type": "FEES PAYMENTS",
+          "content": "SALARY"
+        },
+        "endToEndIdentification": "5e1a3da132cc"
+      }
+    }
   response = requests.post(url=url,headers=headers,json=payload)
   print("response "+response)
   return JsonResponse(response.json())
