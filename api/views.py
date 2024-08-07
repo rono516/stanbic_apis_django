@@ -175,7 +175,6 @@ def rtgs(request):
   
 
 def swift_payment(request):
-  #  print("Here we are")
   access_token = return_auth_token()
   url = "https://api.connect.stanbicbank.co.ke/api/sandbox/swift-payments/"
   headers = {
@@ -211,7 +210,7 @@ def swift_payment(request):
         "counterpartyAccount": {
           "identification": {
             "identification": "00105011763050",
-            "correspondentBank": "UGBAUGKAXXX",
+            "correspondentBank": "EQBLKENA",
             "beneficiaryBank": "IMBLKENA"
           }
         },
@@ -232,7 +231,7 @@ def swift_payment(request):
       }
     }
   response = requests.post(url=url,headers=headers,json=payload)
-  print("response "+response)
+  # print("response "+response)
   return JsonResponse(response.json())
 
 def send_to_mobile_money(request):
