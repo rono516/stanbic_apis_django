@@ -12,7 +12,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Send To Phone</title>
+    <title>RTGS Account to Account</title>
   </head>
   <body>
     <div class="container mt-5">
@@ -28,28 +28,31 @@
         </div>
       </div>
       <div class="card p-4">
-        <p class="h5">Send to Account</p>
-        <form action="{% url 'pesalink' %}" method="POST">
+        <p class="h5">RTGS Account to Account</p>
+        <form action="{% url 'rtgs' %}" method="POST">
           {% csrf_token %}
+          <div class="form-group">
+            <label for="from_account">Account No.</label>
+            <input type="number" class="form-control" name="from_account" id="from_account" placeholder="From Account No">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone No.</label>
+            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone No">
+          </div>
+          <div class="form-group">
+            <label for="to_account">Account No.</label>
+            <input type="number" class="form-control" name="to_account" id="to_account" placeholder="To Account No">
+          </div>
           <div class="form-group">
             <label for="bank">Select Bank</label>
             <select class="form-control" name="bank" id="bank">
             
               {% comment %} <option value="">Equity</option> {% endcomment %}
               {{% for bank in  banks %}
-                <option value="{{ bank.code }}">{{ bank.name }}</option>
+                <option value="{{ bank.swift }}">{{ bank.name }}</option>
               
               {% endfor %}}
             </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="account">Account No.</label>
-            <input type="number" class="form-control" name="account" id="account" placeholder="Account No">
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone No.</label>
-            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone No">
           </div>
           
           <div class="form-group">
