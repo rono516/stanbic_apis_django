@@ -183,54 +183,104 @@ def swift_payment(request):
      "content-type": "application/json",
      "accept": "application/json"
   }
+  # payload = {
+  #     "originatorAccount": {
+  #       "identification": {
+  #         "identification": "1220179020894",
+  #         "debitCurrency": "KES",
+  #         "mobileNumber": "254792009556"
+  #       }
+  #     },
+  #     "requestedExecutionDate": "2021-05-27",
+  #     "dbsReferenceId": "989892717711908",
+  #     "txnNarrative": "TESEAPS123",
+  #     "callBackUrl": "https://clientdomain.com/client/Callback",
+  #     "schedule": {
+  #       "transferFrequency": "MONTHLY",
+  #       "on": "12",
+  #       "startDate": "2021-02-13",
+  #       "endDate": "2022-01-03",
+  #       "repeat": "3",
+  #       "every": "1"
+  #     },
+  #     "transferTransactionInformation": {
+  #       "instructedAmount": {
+  #         "amount": "50",
+  #         "creditCurrency": "KES"
+  #       },
+  #       "counterpartyAccount": {
+  #         "identification": {
+  #           "identification": "00105011763050",
+  #           "correspondentBank": "EQBLKENA",
+  #           "beneficiaryBank": "IMBLKENA"
+  #         }
+  #       },
+  #       "counterparty": {
+  #         "name": "TAAM OIL LTD",
+  #         "postalAddress": {
+  #           "addressLine": "UGANDA",
+  #           "postCode": "1100 ZZ",
+  #           "town": "Kampala",
+  #           "country": "UG"
+  #         }
+  #       },
+  #       "remittanceInformation": {
+  #         "type": "FEES PAYMENTS",
+  #         "content": "SALARY"
+  #       },
+  #       "endToEndIdentification": "5e1a3da132cc"
+  #     }
+  #   }
+
+  # ss
   payload = {
-      "originatorAccount": {
-        "identification": {
-          "identification": "1220179020894",
-          "debitCurrency": "KES",
-          "mobileNumber": "254792009556"
+  "originatorAccount": {
+    "identification": {
+      "identification": "0100001536723",
+      "debitCurrency": "KES",
+      "mobileNumber": "254735084266"
+    }
+  },
+  "requestedExecutionDate": "2021-05-27",
+  "dbsReferenceId": "98989271771112",
+  "txnNarrative": "TESEAPS123",
+  "callBackUrl": "https://clientdomain.com/client/Callback",
+  "schedule": {
+    "transferFrequency": "DAILY",
+    "on": "12",
+    "startDate": "2021-02-13",
+    "endDate": "2022-01-03",
+    "repeat": "3",
+    "every": "1"
+  },
+  "transferTransactionInformation": {
+    "instructedAmount": {
+      "amount": "500",
+      "creditCurrency": "UGX"
+    },
+    "counterpartyAccount": {
+      "identification": {
+        "identification": "9877665554",
+        "correspondentBank": "UGBAUGKAXXX",
+        "beneficiaryBank": "SW-CERBUGKA"
+      }
+      },
+      "counterparty": {
+        "name": "TAAM OIL LTD",
+        "postalAddress": {
+          "addressLine": "UGANDA",
+          "postCode": "1100 ZZ",
+          "town": "Kampala",
+          "country": "UG"
         }
       },
-      "requestedExecutionDate": "2021-05-27",
-      "dbsReferenceId": "989892717711908",
-      "txnNarrative": "TESEAPS123",
-      "callBackUrl": "https://clientdomain.com/client/Callback",
-      "schedule": {
-        "transferFrequency": "MONTHLY",
-        "on": "12",
-        "startDate": "2021-02-13",
-        "endDate": "2022-01-03",
-        "repeat": "3",
-        "every": "1"
+      "remittanceInformation": {
+        "type": "FEES PAYMENTS",
+        "content": "SALARY"
       },
-      "transferTransactionInformation": {
-        "instructedAmount": {
-          "amount": "50",
-          "creditCurrency": "KES"
-        },
-        "counterpartyAccount": {
-          "identification": {
-            "identification": "00105011763050",
-            "correspondentBank": "EQBLKENA",
-            "beneficiaryBank": "IMBLKENA"
-          }
-        },
-        "counterparty": {
-          "name": "TAAM OIL LTD",
-          "postalAddress": {
-            "addressLine": "UGANDA",
-            "postCode": "1100 ZZ",
-            "town": "Kampala",
-            "country": "UG"
-          }
-        },
-        "remittanceInformation": {
-          "type": "FEES PAYMENTS",
-          "content": "SALARY"
-        },
-        "endToEndIdentification": "5e1a3da132cc"
-      }
+      "endToEndIdentification": "5e1a3da132cc"
     }
+  }
   response = requests.post(url=url,headers=headers,json=payload)
   # print("response "+response)
   return JsonResponse(response.json())
