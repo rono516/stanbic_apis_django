@@ -132,7 +132,7 @@ def rtgs(request):
           }
         },
         "requestedExecutionDate": "2024-08-09",
-        "dbsReferenceId": "9898927177110",
+        "dbsReferenceId": str(random.randrange(100000, 1000000)),
         "txnNarrative": "TESEAPS123",
         "transferTransactionInformation": {
           "instructedAmount": {
