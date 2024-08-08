@@ -1,5 +1,6 @@
 
 [
     {"name": "I&M BANK KE", "swift": "IMBLKENA"},
-    {"name": "EQUITY BANK (KENYA) LIMITED", "swift": "EQBLKENA"}
+    {"name": "EQUITY BANK (KENYA) LIMITED", "swift": "EQBLKENA"},
+    {"name": "STANBIC BANK KENYA LIMITED", "swift":"SBICKENX"}
 ]

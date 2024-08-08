@@ -18,9 +18,15 @@ def sendtoaccount(request):
      banks = json.load(f)
      return render(request, "api/sendtoaccount.html", {"banks": banks})
 def rtgs_account_to_account(request):
-   with open("api/resources/swift.json") as f:
+  with open("api/resources/swift.json") as f:
      banks = json.load(f)
      return render(request, "api/rtgs_acccount_to_account.html", {"banks": banks})
+def swift_account_to_account(request):
+  with open("api/resources/swift.json") as f:
+    banks = json.load(f)
+    return render(request, "api/swift_acccount_to_account.html", {"banks": banks})
+
+
 
 def return_auth_token():
 
@@ -176,114 +182,127 @@ def rtgs(request):
 
 
 def swift_payment(request):
-  access_token = return_auth_token()
-  url = "https://api.connect.stanbicbank.co.ke/api/sandbox/swift-payments/"
-  headers = {
-     "Authorization": f"Bearer {access_token}",
-     "content-type": "application/json",
-     "accept": "application/json"
-  }
-  # payload = {
-  #     "originatorAccount": {
-  #       "identification": {
-  #         "identification": "1220179020894",
-  #         "debitCurrency": "KES",
-  #         "mobileNumber": "254792009556"
-  #       }
-  #     },
-  #     "requestedExecutionDate": "2021-05-27",
-  #     "dbsReferenceId": "989892717711908",
-  #     "txnNarrative": "TESEAPS123",
-  #     "callBackUrl": "https://clientdomain.com/client/Callback",
-  #     "schedule": {
-  #       "transferFrequency": "MONTHLY",
-  #       "on": "12",
-  #       "startDate": "2021-02-13",
-  #       "endDate": "2022-01-03",
-  #       "repeat": "3",
-  #       "every": "1"
-  #     },
-  #     "transferTransactionInformation": {
-  #       "instructedAmount": {
-  #         "amount": "50",
-  #         "creditCurrency": "KES"
-  #       },
-  #       "counterpartyAccount": {
-  #         "identification": {
-  #           "identification": "00105011763050",
-  #           "correspondentBank": "EQBLKENA",
-  #           "beneficiaryBank": "IMBLKENA"
-  #         }
-  #       },
-  #       "counterparty": {
-  #         "name": "TAAM OIL LTD",
-  #         "postalAddress": {
-  #           "addressLine": "UGANDA",
-  #           "postCode": "1100 ZZ",
-  #           "town": "Kampala",
-  #           "country": "UG"
-  #         }
-  #       },
-  #       "remittanceInformation": {
-  #         "type": "FEES PAYMENTS",
-  #         "content": "SALARY"
-  #       },
-  #       "endToEndIdentification": "5e1a3da132cc"
-  #     }
-  #   }
+  if request.method == "POST":
+    access_token = return_auth_token()
+    url = "https://api.connect.stanbicbank.co.ke/api/sandbox/swift-payments/"
+    headers = {
+      "Authorization": f"Bearer {access_token}",
+      "content-type": "application/json",
+      "accept": "application/json"
+    }
+    # payload = {
+    #     "originatorAccount": {
+    #       "identification": {
+    #         "identification": "1220179020894",
+    #         "debitCurrency": "KES",
+    #         "mobileNumber": "254792009556"
+    #       }
+    #     },
+    #     "requestedExecutionDate": "2021-05-27",
+    #     "dbsReferenceId": "989892717711908",
+    #     "txnNarrative": "TESEAPS123",
+    #     "callBackUrl": "https://clientdomain.com/client/Callback",
+    #     "schedule": {
+    #       "transferFrequency": "MONTHLY",
+    #       "on": "12",
+    #       "startDate": "2021-02-13",
+    #       "endDate": "2022-01-03",
+    #       "repeat": "3",
+    #       "every": "1"
+    #     },
+    #     "transferTransactionInformation": {
+    #       "instructedAmount": {
+    #         "amount": "50",
+    #         "creditCurrency": "KES"
+    #       },
+    #       "counterpartyAccount": {
+    #         "identification": {
+    #           "identification": "00105011763050",
+    #           "correspondentBank": "EQBLKENA",
+    #           "beneficiaryBank": "IMBLKENA"
+    #         }
+    #       },
+    #       "counterparty": {
+    #         "name": "TAAM OIL LTD",
+    #         "postalAddress": {
+    #           "addressLine": "UGANDA",
+    #           "postCode": "1100 ZZ",
+    #           "town": "Kampala",
+    #           "country": "UG"
+    #         }
+    #       },
+    #       "remittanceInformation": {
+    #         "type": "FEES PAYMENTS",
+    #         "content": "SALARY"
+    #       },
+    #       "endToEndIdentification": "5e1a3da132cc"
+    #     }
+    #   }
 
-  # ss
-  payload = {
-  "originatorAccount": {
-    "identification": {
-      "identification": "0100001536723",
-      "debitCurrency": "KES",
-      "mobileNumber": "254735084266"
-    }
-  },
-  "requestedExecutionDate": "2021-05-27",
-  "dbsReferenceId": "98989271771112",
-  "txnNarrative": "TESEAPS123",
-  "callBackUrl": "https://clientdomain.com/client/Callback",
-  "schedule": {
-    "transferFrequency": "DAILY",
-    "on": "12",
-    "startDate": "2021-02-13",
-    "endDate": "2022-01-03",
-    "repeat": "3",
-    "every": "1"
-  },
-  "transferTransactionInformation": {
-    "instructedAmount": {
-      "amount": "500",
-      "creditCurrency": "UGX"
-    },
-    "counterpartyAccount": {
+    # ss
+    from_account = request.POST.get("from_account")
+    to_account = request.POST.get("to_account")
+    phone = request.POST.get("phone")
+    from_bank = request.POST.get("from_bank")
+    to_bank = request.POST.get("to_bank")
+    amount = request.POST.get("amount")
+    reason = request.POST.get("reason")
+    payload = {
+    "originatorAccount": {
       "identification": {
-        "identification": "9877665554",
-        "correspondentBank": "UGBAUGKAXXX",
-        "beneficiaryBank": "SW-CERBUGKA"
+        "identification": from_account,
+        "debitCurrency": "KES",
+        "mobileNumber": phone
       }
+    },
+    "requestedExecutionDate": "2024-08-09",
+    "dbsReferenceId": str(random.randrange(100000, 1000000)),
+    "txnNarrative": "TESEAPS123",
+    "callBackUrl": "https://clientdomain.com/client/Callback",
+    "schedule": {
+      "transferFrequency": "DAILY",
+      "on": "12",
+      "startDate": "2021-02-13",
+      "endDate": "2022-01-03",
+      "repeat": "3",
+      "every": "1"
+    },
+    # 1220179020894 0100013845845
+    "transferTransactionInformation": {
+      "instructedAmount": {
+        "amount": amount,
+        "creditCurrency": "UGX"
       },
-      "counterparty": {
-        "name": "TAAM OIL LTD",
-        "postalAddress": {
-          "addressLine": "UGANDA",
-          "postCode": "1100 ZZ",
-          "town": "Kampala",
-          "country": "UG"
+      "counterpartyAccount": {
+        "identification": {
+          "identification": to_account,
+          "correspondentBank": from_bank,
+          "beneficiaryBank": to_bank
         }
-      },
-      "remittanceInformation": {
-        "type": "FEES PAYMENTS",
-        "content": "SALARY"
-      },
-      "endToEndIdentification": "5e1a3da132cc"
+        },
+        "counterparty": {
+          "name": "TAAM OIL LTD",
+          "postalAddress": {
+            "addressLine": "UGANDA",
+            "postCode": "1100 ZZ",
+            "town": "Kampala",
+            "country": "UG"
+          }
+        },
+        "remittanceInformation": {
+          "type": reason,
+          "content": reason
+        },
+        "endToEndIdentification": "5e1a3da132cc"
+      }
     }
-  }
-  response = requests.post(url=url,headers=headers,json=payload)
-  # print("response "+response)
-  return JsonResponse(response.json())
+
+    response = requests.post(url=url,headers=headers,json=payload)
+    # print("response "+response)
+    # print(payload)
+    return JsonResponse(response.json())
+  else:
+    return render( request,"api/swift_acccount_to_account.html")
 
 def send_to_mobile_money(request):
 

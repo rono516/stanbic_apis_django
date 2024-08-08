@@ -12,7 +12,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>RTGS Account to Account</title>
+    <title>SWIFT Account to Account</title>
   </head>
   <body>
     <div class="container mt-5">
@@ -31,12 +31,22 @@
         </div>
       </div>
       <div class="card p-4">
-        <p class="h5">RTGS Account to Account</p>
-        <form action="{% url 'rtgs' %}" method="POST">
+        <p class="h5">SWIFT Account to Account</p>
+        <form action="{% url 'swift' %}" method="POST">
           {% csrf_token %}
           <div class="form-group">
             <label for="from_account">Account No.</label>
             <input type="number" class="form-control" name="from_account" id="from_account" placeholder="From Account No">
+          </div>
+          <div class="form-group">
+            <label for="from_bank">Select From Bank</label>
+            <select class="form-control" name="from_bank" id="from_bank">
+
+              {{% for bank in  banks %}
+                <option value="{{ bank.swift }}">{{ bank.name }}</option>
+
+              {% endfor %}}
+            </select>
           </div>
           <div class="form-group">
             <label for="phone">Phone No.</label>
@@ -47,10 +57,9 @@
             <input type="number" class="form-control" name="to_account" id="to_account" placeholder="To Account No">
           </div>
           <div class="form-group">
-            <label for="bank">Select Bank</label>
-            <select class="form-control" name="bank" id="bank">
+            <label for="to_bank">Select To Bank</label>
+            <select class="form-control" name="to_bank" id="to_bank">
 
-              {% comment %} <option value="">Equity</option> {% endcomment %}
               {{% for bank in  banks %}
                 <option value="{{ bank.swift }}">{{ bank.name }}</option>
 
