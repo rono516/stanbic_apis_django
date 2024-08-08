@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
+import random
 client_id = "bde1801356912a01adc1e2b50fc4879c"
 client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
 token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
@@ -65,9 +66,9 @@ def pesalink(request):
                   "mobileNumber": phone
               }
           },
-          "requestedExecutionDate": "2024-08-02",
+          "requestedExecutionDate": "2024-08-09",
           "sendMoneyTo": "ACCOUNT.NUMBER",
-          "dbsReferenceId": "9898927177117694688",
+          "dbsReferenceId": str(random.randrange(100000, 1000000)),
           "txnNarrative": "TESTPESALINK",
           "callBackUrl": "https://clientdomain.com/client/Callback",
           "transferTransactionInformation": {
@@ -109,7 +110,7 @@ def pesalink(request):
       return JsonResponse(response.json())
     else:
        return render(request,"api/sendtoaccount.html")
-  
+
 def rtgs(request):
   if request.method == "POST":
     access_token = return_auth_token()
@@ -171,8 +172,8 @@ def rtgs(request):
     return JsonResponse(response.json())
   else:
      return render( request,"api/rtgs_acccount_to_account.html")
-    
-  
+
+
 
 def swift_payment(request):
   access_token = return_auth_token()
@@ -235,7 +236,7 @@ def swift_payment(request):
   return JsonResponse(response.json())
 
 def send_to_mobile_money(request):
-   
+
    send_money_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
    access_token = return_auth_token()
    payload = {
@@ -279,7 +280,7 @@ def send_to_mobile_money(request):
         "content-type": "application/json",
         "accept": "application/json"
     }
-    
+
    response = requests.post(send_money_url, json=payload, headers=headers)
    return JsonResponse(response.json())
- 
+
