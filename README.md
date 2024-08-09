@@ -12,7 +12,7 @@ http://127.0.0.1:8000/api/rtgs
 SWIFT API
 http://127.0.0.1:8000/api/swift_payment
 
-# Pesalink API
+## Pesalink API
 Handles PesaLink payment processing via Stanbic Bank's API.
 
     This function processes a POST request to initiate a PesaLink payment by sending a request 
@@ -46,7 +46,7 @@ Handles PesaLink payment processing via Stanbic Bank's API.
         - transferTransactionInformation: Contains details about the amount, counterparty 
           account, counterparty identity, and remittance information.
 
-# RTGS API
+## RTGS API
 Handles Real-Time Gross Settlement (RTGS) payment processing via Stanbic Bank's API.
 
     This function processes a POST request to initiate an RTGS payment by sending a request 
@@ -82,7 +82,7 @@ Handles Real-Time Gross Settlement (RTGS) payment processing via Stanbic Bank's 
     Example Usage:
     - Sending a POST request with the necessary form data to initiate an RTGS payment.
 
-# SWIFT API
+## SWIFT API
 Handles SWIFT payment processing via Stanbic Bank's API.
 
     This function processes a POST request to initiate a SWIFT payment by sending a request 
@@ -121,7 +121,7 @@ Handles SWIFT payment processing via Stanbic Bank's API.
     Example Usage:
     - Sending a POST request with the necessary form data to initiate a SWIFT payment.
 
-# Responses from Stanbic APIs
+## Responses from Stanbic APIs
 Successful request response 
 ```
 {
@@ -130,5 +130,23 @@ Successful request response
   "bankReferenceId": "FT242141B1SH",
   "reasonText": "Processed by bank",
   "nextExecutionDate": ""
+}
+```
+
+Sometimes the Stanbic Servers are in maintainance. The following response will be displayed
+```
+{
+  "responseCode": "500",
+  "responseMessage": "Internal Server Error"
+}
+```
+Other errors and responses will follow the same format e.g for rejected requests
+```
+{
+  "dbsReferenceId": "989892717711",
+  "reasonCode": "999",
+  "bankStatus": "REJECTED",
+  "bankReferenceId": "",
+  "reasonText": "0100013868365.1/IIB242170425438332.01/-1/NO,PAY.METHOD:1:1=Txn Not Allowed. Joint Account.,T24.ERROR.CODE:1:1=999,"
 }
 ```
