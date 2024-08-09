@@ -102,7 +102,7 @@ def pesalink(request):
       account_no = request.POST.get("account")
       amount = request.POST.get("amount")
       reason = request.POST.get("reason")
-      phone = request.POST.get("phone")
+      phone = settings.KBS_FROM_PHONE
 
       payload = {
           "originatorAccount": {
@@ -126,15 +126,15 @@ def pesalink(request):
                       "recipientBankCode": bank_code, #cooperative bank
                   }
               },
-              "counterparty": {
-                  "name": "HEZBONA",
-                  "postalAddress": {
-                      "addressLine": "KENYA",
-                      "postCode": "1100 ZZ",
-                      "town": "Nairobi",
-                      "country": "KE"
-                  }
-              },
+              # "counterparty": {
+              #     "name": "HEZBONA",
+              #     "postalAddress": {
+              #         "addressLine": "KENYA",
+              #         "postCode": "1100 ZZ",
+              #         "town": "Nairobi",
+              #         "country": "KE"
+              #     }
+              # },
               "remittanceInformation": {
                   "type": reason,
                   "content": reason
@@ -196,8 +196,8 @@ def rtgs(request):
     access_token = return_auth_token()
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/rtgs-payments/"
     # Data from request
-    from_account = request.POST.get("from_account")
-    phone = request.POST.get("phone")
+    from_account = settings.KBS_FROM_ACCOUNT
+    phone = settings.KBS_FROM_PHONE
     to_account = request.POST.get("to_account")
     bank = request.POST.get("bank")
     amount = request.POST.get("amount")
