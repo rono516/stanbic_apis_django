@@ -55,6 +55,42 @@ def get_auth_token(request):
 
 
 def pesalink(request):
+    """
+    Handles PesaLink payment processing via Stanbic Bank's API.
+
+    This function processes a POST request to initiate a PesaLink payment by sending a request 
+    to the Stanbic Bank sandbox API. It collects payment details from the request, constructs 
+    a payload, and makes an API call to the PesaLink endpoint.
+
+    Parameters:
+    - request (HttpRequest): The HTTP request object, expected to be a POST request with the 
+      following form data:
+        - bank: The recipient's bank code.
+        - account: The recipient's bank account number.
+        - amount: The amount to be transferred.
+        - reason: The reason for the transfer.
+        - phone: The phone number of the originator.
+
+    Returns:
+    - JsonResponse: If the request method is POST, returns the JSON response from the Stanbic 
+      Bank API.
+    - HttpResponse: If the request method is not POST, renders the "sendtoaccount.html" template.
+
+    API Details:
+    - Endpoint: https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/
+    - Authorization: Bearer token obtained from return_auth_token() function
+    - Payload:
+      - originatorAccount: Contains the mobile number of the originator.
+        - requestedExecutionDate: Static date set to "2024-08-09".
+        - sendMoneyTo: Static value "ACCOUNT.NUMBER".
+        - dbsReferenceId: Randomly generated 6-digit reference ID.
+        - txnNarrative: Static value "TESTPESALINK".
+        - callBackUrl: Static callback URL "https://clientdomain.com/client/Callback".
+        - transferTransactionInformation: Contains details about the amount, counterparty 
+          account, counterparty identity, and remittance information.
+    Example Usage:
+    - Sending a POST request with the necessary form data to initiate a PesaLink payment.
+    """
     if request.method == "POST":
       access_token = return_auth_token()
       url = "https://api.connect.stanbicbank.co.ke/api/sandbox/pesalink-payments/"
