@@ -122,3 +122,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STANBIC_CLIENT_ID = "bde1801356912a01adc1e2b50fc4879c"
+STANBIC_CLIENT_SECRET = "42a920ac85b542486ca5ca6ebbe57a60"
+STANBIC_TOKEN_URL = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
+STANBIC_SCOPE = "payments"

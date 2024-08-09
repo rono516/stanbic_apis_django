@@ -2,13 +2,15 @@ from django.http import JsonResponse
 import requests
 from django.shortcuts import render
 import random
-client_id = "bde1801356912a01adc1e2b50fc4879c"
-client_secret = "42a920ac85b542486ca5ca6ebbe57a60"
-token_url = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oauth2/token"
-scope = "payments"
-
-
 import json
+from django.conf import settings
+
+client_id = settings.STANBIC_CLIENT_ID
+client_secret = settings.STANBIC_CLIENT_SECRET
+token_url = settings.STANBIC_TOKEN_URL
+scope = settings.STANBIC_SCOPE
+
+
 def index(request):
   return render(request, "api/index.html")
 def sendtophone(request):
