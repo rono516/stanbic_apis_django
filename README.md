@@ -121,4 +121,14 @@ Handles SWIFT payment processing via Stanbic Bank's API.
     Example Usage:
     - Sending a POST request with the necessary form data to initiate a SWIFT payment.
 
-
+# Responses from Stanbic APIs
+Successful request response 
+```
+{
+  "dbsReferenceId": "540769",
+  "bankStatus": "PROCESSED",
+  "bankReferenceId": "FT242141B1SH",
+  "reasonText": "Processed by bank",
+  "nextExecutionDate": ""
+}
+```
