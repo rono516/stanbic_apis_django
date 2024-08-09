@@ -81,6 +81,44 @@ Handles Real-Time Gross Settlement (RTGS) payment processing via Stanbic Bank's 
 
     Example Usage:
     - Sending a POST request with the necessary form data to initiate an RTGS payment.
-    
+
+# SWIFT API
+Handles SWIFT payment processing via Stanbic Bank's API.
+
+    This function processes a POST request to initiate a SWIFT payment by sending a request 
+    to the Stanbic Bank sandbox API. It collects payment details from the request, constructs 
+    a payload, and makes an API call to the SWIFT endpoint.
+
+    Parameters:
+    - request (HttpRequest): The HTTP request object, expected to be a POST request with the 
+      following form data:
+        - from_account: The originator's bank account number.
+        - to_account: The recipient's bank account number.
+        - phone: The phone number of the originator.
+        - from_bank: The originator's bank code.
+        - to_bank: The recipient's bank code.
+        - amount: The amount to be transferred.
+        - reason: The reason for the transfer.
+
+    Returns:
+    - JsonResponse: If the request method is POST, returns the JSON response from the Stanbic 
+      Bank API.
+    - HttpResponse: If the request method is not POST, renders the "swift_acccount_to_account.html" template.
+
+    API Details:
+    - Endpoint: https://api.connect.stanbicbank.co.ke/api/sandbox/swift-payments/
+    - Authorization: Bearer token obtained from return_auth_token()
+    - Payload:
+        - originatorAccount: Contains the account and mobile number of the originator.
+        - requestedExecutionDate: Static date set to "2024-08-09".
+        - dbsReferenceId: Randomly generated 6-digit reference ID.
+        - txnNarrative: Static value "TESEAPS123".
+        - callBackUrl: Static callback URL "https://clientdomain.com/client/Callback".
+        - schedule: Contains scheduling information such as transfer frequency and date range.
+        - transferTransactionInformation: Contains details about the amount, counterparty 
+          account, counterparty identity, and remittance information.
+
+    Example Usage:
+    - Sending a POST request with the necessary form data to initiate a SWIFT payment.
 
 

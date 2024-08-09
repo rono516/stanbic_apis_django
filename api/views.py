@@ -254,6 +254,45 @@ def rtgs(request):
 
 
 def swift_payment(request):
+  """
+    Handles SWIFT payment processing via Stanbic Bank's API.
+
+    This function processes a POST request to initiate a SWIFT payment by sending a request 
+    to the Stanbic Bank sandbox API. It collects payment details from the request, constructs 
+    a payload, and makes an API call to the SWIFT endpoint.
+
+    Parameters:
+    - request (HttpRequest): The HTTP request object, expected to be a POST request with the 
+      following form data:
+        - from_account: The originator's bank account number.
+        - to_account: The recipient's bank account number.
+        - phone: The phone number of the originator.
+        - from_bank: The originator's bank code.
+        - to_bank: The recipient's bank code.
+        - amount: The amount to be transferred.
+        - reason: The reason for the transfer.
+
+    Returns:
+    - JsonResponse: If the request method is POST, returns the JSON response from the Stanbic 
+      Bank API.
+    - HttpResponse: If the request method is not POST, renders the "swift_acccount_to_account.html" template.
+
+    API Details:
+    - Endpoint: https://api.connect.stanbicbank.co.ke/api/sandbox/swift-payments/
+    - Authorization: Bearer token obtained from return_auth_token()
+    - Payload:
+        - originatorAccount: Contains the account and mobile number of the originator.
+        - requestedExecutionDate: Static date set to "2024-08-09".
+        - dbsReferenceId: Randomly generated 6-digit reference ID.
+        - txnNarrative: Static value "TESEAPS123".
+        - callBackUrl: Static callback URL "https://clientdomain.com/client/Callback".
+        - schedule: Contains scheduling information such as transfer frequency and date range.
+        - transferTransactionInformation: Contains details about the amount, counterparty 
+          account, counterparty identity, and remittance information.
+
+    Example Usage:
+    - Sending a POST request with the necessary form data to initiate a SWIFT payment.
+    """
   if request.method == "POST":
     access_token = return_auth_token()
     url = "https://api.connect.stanbicbank.co.ke/api/sandbox/swift-payments/"
@@ -262,56 +301,7 @@ def swift_payment(request):
       "content-type": "application/json",
       "accept": "application/json"
     }
-    # payload = {
-    #     "originatorAccount": {
-    #       "identification": {
-    #         "identification": "1220179020894",
-    #         "debitCurrency": "KES",
-    #         "mobileNumber": "254792009556"
-    #       }
-    #     },
-    #     "requestedExecutionDate": "2021-05-27",
-    #     "dbsReferenceId": "989892717711908",
-    #     "txnNarrative": "TESEAPS123",
-    #     "callBackUrl": "https://clientdomain.com/client/Callback",
-    #     "schedule": {
-    #       "transferFrequency": "MONTHLY",
-    #       "on": "12",
-    #       "startDate": "2021-02-13",
-    #       "endDate": "2022-01-03",
-    #       "repeat": "3",
-    #       "every": "1"
-    #     },
-    #     "transferTransactionInformation": {
-    #       "instructedAmount": {
-    #         "amount": "50",
-    #         "creditCurrency": "KES"
-    #       },
-    #       "counterpartyAccount": {
-    #         "identification": {
-    #           "identification": "00105011763050",
-    #           "correspondentBank": "EQBLKENA",
-    #           "beneficiaryBank": "IMBLKENA"
-    #         }
-    #       },
-    #       "counterparty": {
-    #         "name": "TAAM OIL LTD",
-    #         "postalAddress": {
-    #           "addressLine": "UGANDA",
-    #           "postCode": "1100 ZZ",
-    #           "town": "Kampala",
-    #           "country": "UG"
-    #         }
-    #       },
-    #       "remittanceInformation": {
-    #         "type": "FEES PAYMENTS",
-    #         "content": "SALARY"
-    #       },
-    #       "endToEndIdentification": "5e1a3da132cc"
-    #     }
-    #   }
-
-    # ss
+    
     from_account = request.POST.get("from_account")
     to_account = request.POST.get("to_account")
     phone = request.POST.get("phone")
