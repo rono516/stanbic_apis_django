@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,9 @@ STANBIC_TOKEN_URL = "https://api.connect.stanbicbank.co.ke/api/sandbox/auth/oaut
 STANBIC_SCOPE = "payments"
 KBS_FROM_ACCOUNT = "0100013868365"
 KBS_FROM_PHONE="254792009556"
+
+# PAYPAL
+PAYPAL_CLIENT_ID = 'AWSJ-1T2RTcjFqu6aVWuxF4BaMUcq1IozYGsl_bldQC0VCHgh4f4MlCLT4ndZfmo9x6mlLNG7mzDq6YH'
+PAYPAL_SECRET = 'EFo4D1rFAKDrzkOEGhqfpxv81YEJ-ikxhV-ZUsffnmijZQZ2o_X1fSzFSPqLArpGOsNDq5HMImSVGKND'
+PAYPAL_RECEIVER_EMAIL = "sb-vzd5k29858989@business.example.com"
+PAYPAL_TEST = True

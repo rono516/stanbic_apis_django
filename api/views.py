@@ -4,7 +4,10 @@ from django.shortcuts import render
 import random
 import json
 from django.conf import settings
-
+from django.urls import reverse
+from django.shortcuts import render
+from paypal.standard.forms import PayPalPaymentsForm
+import uuid
 client_id = settings.STANBIC_CLIENT_ID
 client_secret = settings.STANBIC_CLIENT_SECRET
 token_url = settings.STANBIC_TOKEN_URL
@@ -26,7 +29,31 @@ def rtgs_account_to_account(request):
 def swift_account_to_account(request):
   with open("api/resources/swift.json") as f:
     banks = json.load(f)
-    return render(request, "api/swift_acccount_to_account.html", {"banks": banks})
+    return render(request, "api/swift_acccount_to_account.html", {"banks": banks})\
+    
+def checkout_paypal(request):
+   host = request.get_host()
+   paypal_checkout = {
+      'business': settings.PAYPAL_RECEIVER_EMAIL, # receiving payment
+      'amount': 30,
+      'item_name' : "Deposit",
+      'invoice': uuid.uuid4(),
+      'currency': 'USD',
+      'notify_url' : f"http://{host}{reverse('paypal-ipn')}", # send above data to this url
+      'return_url': f"http://{host}{reverse("payment-success")}",
+      'cancel_url': f"http://{host}{reverse("payment-fail")}",
+   }
+   paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
+   context = {
+      'paypal' : paypal_payment
+   }
+   return render(request, "paypal/checkout.html", context=context)
+
+def payment_successfull(request):
+   return render(request, "paypal/payment-success.html")
+
+def payment_failed(request):
+   return render(request, "paypal/payment-failed.html")
 
 
 
@@ -367,6 +394,22 @@ def swift_payment(request):
     return JsonResponse(response.json())
   else:
     return render( request,"api/swift_acccount_to_account.html")
+  
+def paypal_pay(request):
+    paypal_dict = {
+       "business": "packlinesystemsltd@gmail.com",
+       "amount" : "10.00",
+        "item_name": "deposit",
+        "invoice": "deposit234",
+        "notify_url": request.build_absolute_uri(reverse('https://api.connect.stanbicbank.co.ke')),
+        "return": request.build_absolute_uri(reverse('https://api.connect.stanbicbank.co.ke')),
+        "cancel_return": request.build_absolute_uri(reverse('https://api.connect.stanbicbank.co.ke')),
+        "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
+    }
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    context = {"form": form}
+    return render(request, "payment.html", context)
 
 def send_to_mobile_money(request):
 

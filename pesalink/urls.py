@@ -25,5 +25,6 @@ urlpatterns = [
     path("rtgs_account_to_account/", views.rtgs_account_to_account, name="rtgs_account_to_account"),
     path("swift_account_to_account", views.swift_account_to_account, name="swift_account_to_account"),
     path('admin/', admin.site.urls),
-    path('api/', include("api.urls"))
+    path('api/', include("api.urls")),
+    path("", include('paypal.standard.ipn.urls')),
 ]
