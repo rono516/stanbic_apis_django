@@ -472,3 +472,11 @@ def send_to_mobile_money(request):
    response = requests.post(send_money_url, json=payload, headers=headers)
    return JsonResponse(response.json())
 
+
+# NOTES
+"""
+counter party information - is it mandatory - you need to pass a value - it will be registered
+name is important - address is less important
+pesalink payment is synchronous - callback is not received at the moment
+does not allow sending to mobile via pesalink
+"""
