@@ -8,6 +8,9 @@ from django.urls import reverse
 from django.shortcuts import render
 from paypal.standard.forms import PayPalPaymentsForm
 import uuid
+from django.http import HttpResponseRedirect
+from urllib.parse import urlencode
+
 client_id = settings.STANBIC_CLIENT_ID
 client_secret = settings.STANBIC_CLIENT_SECRET
 token_url = settings.STANBIC_TOKEN_URL
@@ -40,14 +43,23 @@ def checkout_paypal(request):
       'invoice': uuid.uuid4(),
       'currency': 'USD',
       'notify_url' : f"http://{host}{reverse('paypal-ipn')}", # send above data to this url
-      'return_url': f"http://{host}{reverse("payment-success")}",
-      'cancel_url': f"http://{host}{reverse("payment-fail")}",
+      'return_url': f"http://{host}{reverse("paypal-payment-success")}",
+      'cancel_url': f"http://{host}{reverse("paypal-payment-fail")}",
+      'cmd': '_xclick'  # This indicates a single item purchase
    }
    paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
-   context = {
-      'paypal' : paypal_payment
-   }
-   return render(request, "paypal/checkout.html", context=context)
+   # Build the PayPal URL
+   # Build the PayPal URL
+   base_url = "https://www.sandbox.paypal.com/cgi-bin/webscr" if settings.PAYPAL_TEST else "https://www.paypal.com/cgi-bin/webscr"
+   query_string = urlencode(paypal_checkout)  # Using paypal_checkout directly
+   paypal_url = f"{base_url}?{query_string}"
+
+
+   return HttpResponseRedirect(paypal_url)
+  #  context = {
+  #     'paypal' : paypal_payment
+  #  }
+  #  return render(request, "paypal/checkout.html", context=context)
 
 def payment_successfull(request):
    return render(request, "paypal/payment-success.html")

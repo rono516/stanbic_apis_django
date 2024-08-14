@@ -6,13 +6,13 @@
     <title>Checkout page</title>
 </head>
 <body>
-    <h1>Checkout for product: Product Name</h1>
+    <h1>Checkout Page</h1>
     <div class="product-container">
         <div class="products">
             {% comment %} <img class="img" src="{{product.image}}" alt=""> {% endcomment %}
-            <p>Product Name</p>
+            {% comment %} <p>Product Name</p>
             <p>Price: $ 30</p>
-            <p>Description: description</p>
+            <p>Description: description</p> {% endcomment %}
             <!-- <button>Purchase</button> -->
             {{paypal.render}}
         </div>  

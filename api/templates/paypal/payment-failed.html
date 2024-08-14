@@ -6,17 +6,16 @@
     <title>Payment failed</title>
 </head>
 <body>
-    <h1>Payment failed for product: Name</h1>
-    <div class="product-container">
+    <h1>Payment failed</h1>
+    {% comment %} <div class="product-container">
         <div class="products">
-            {% comment %} <img class="img" src="{{product.image}}" alt=""> {% endcomment %}
             <p>Name</p>
             <p>Price: $ 30</p>
             <p>Description: Description</p>
 
         </div>  
-    </div>
-    <style>
+    </div> {% endcomment %}
+    {% comment %} <style>
         body {
             padding: 10px;
             box-sizing: border-box;
@@ -39,6 +38,6 @@
             color: white;
             border: none;
         }
-    </style>
+    </style> {% endcomment %}
 </body>
 </html>
