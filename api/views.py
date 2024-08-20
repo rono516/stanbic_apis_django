@@ -32,7 +32,7 @@ def rtgs_account_to_account(request):
 def swift_account_to_account(request):
   with open("api/resources/swift.json") as f:
     banks = json.load(f)
-    return render(request, "api/swift_acccount_to_account.html", {"banks": banks})\
+    return render(request, "api/swift_acccount_to_account.html", {"banks": banks})
     
 def checkout_paypal(request):
    host = request.get_host()
@@ -56,10 +56,6 @@ def checkout_paypal(request):
 
 
    return HttpResponseRedirect(paypal_url)
-  #  context = {
-  #     'paypal' : paypal_payment
-  #  }
-  #  return render(request, "paypal/checkout.html", context=context)
 
 def payment_successfull(request):
    return render(request, "paypal/payment-success.html")
@@ -161,6 +157,7 @@ def pesalink(request):
               },
               "counterpartyAccount": {
                   "identification": {
+                      # "recipientMobileNo": "254792009556",
                       "recipientBankAcctNo": account_no,
                       "recipientBankCode": bank_code, #cooperative bank
                   }
@@ -250,7 +247,7 @@ def rtgs(request):
             "mobileNumber": phone
           }
         },
-        "requestedExecutionDate": "2024-08-09",
+        "requestedExecutionDate": "2024-08-21",
         "dbsReferenceId": str(random.randrange(100000, 1000000)),
         "txnNarrative": "TESEAPS123",
         "transferTransactionInformation": {
@@ -342,11 +339,14 @@ def swift_payment(request):
       "content-type": "application/json",
       "accept": "application/json"
     }
+
+    from_account = settings.KBS_FROM_ACCOUNT
+    phone = settings.KBS_FROM_PHONE
     
-    from_account = request.POST.get("from_account")
+    # from_account = request.POST.get("from_account")
     to_account = request.POST.get("to_account")
-    phone = request.POST.get("phone")
-    from_bank = request.POST.get("from_bank")
+    # phone = request.POST.get("phone")
+    from_bank = "SBICKENX"
     to_bank = request.POST.get("to_bank")
     amount = request.POST.get("amount")
     reason = request.POST.get("reason")

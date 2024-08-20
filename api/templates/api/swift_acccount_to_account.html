@@ -34,11 +34,11 @@
         <p class="h5">SWIFT</p>
         <form action="{% url 'swift' %}" method="POST">
           {% csrf_token %}
-          <div class="form-group">
+          {% comment %} <div class="form-group">
             <label for="from_account">Account No.</label>
             <input type="number" class="form-control" name="from_account" id="from_account" placeholder="From Account No">
-          </div>
-          <div class="form-group">
+          </div> {% endcomment %}
+          {% comment %} <div class="form-group">
             <label for="from_bank">Select From Bank</label>
             <select class="form-control" name="from_bank" id="from_bank">
 
@@ -47,11 +47,11 @@
 
               {% endfor %}}
             </select>
-          </div>
-          <div class="form-group">
+          </div> {% endcomment %}
+          {% comment %} <div class="form-group">
             <label for="phone">Phone No.</label>
             <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone No">
-          </div>
+          </div> {% endcomment %}
           <div class="form-group">
             <label for="to_account">Account No.</label>
             <input type="number" class="form-control" name="to_account" id="to_account" placeholder="To Account No">
